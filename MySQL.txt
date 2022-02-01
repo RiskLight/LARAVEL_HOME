@@ -1,0 +1,60 @@
+CREATE table vendors
+(
+id int AUTO_INCREMENT not null primary KEY,
+title VARCHAR(50) not null,
+quantity_products int not null,
+min_price int not null,
+max_price int not null
+);
+
+
+alter table vendors 
+add COLUMN vendor_name varchar(50) not null,
+add COLUMN phone_number varchar(12) not null,
+add COLUMN order_capacity ENUM('big','small') not null;
+
+
+INSERT INTO 
+vendors (title, quantity_products, min_price, max_price, vendor_name, phone_number, order_capacity)
+VALUES
+('Дилдо Точка', 555, 440, 680,'Оля', '0684573876', 'big'),
+('Плюшевый дельфин', 100, 450, 555, 'Гена', '0954573876', 'small'),
+('Виброяйцо', 97, 444, 798,'Евстрахий', '0734573876', 'big'),
+('Жмак-жмак', 56, 99, 305,'Гоша', '0664573876', 'small'),
+('Помело', 225, 101, 177,'Стася', '0634573876', 'big'),
+('Чпок-чмок', 178, 356, 450,'Игнатий', '0624273876', 'small'),
+('Жбан', 76, 325, 706,'Арсений', '0666473876', 'big'),
+('Для попки', 154, 785, 1098,'Игорь', '0624273876', 'small'),
+('Отсосалочкин', 280, 1056, 1301,'Петюня', '0994877386', 'big'),
+('Кровосися', 59, 540, 560,'Витюя', '0685553896', 'small');
+
+
+SELECT * FROM vendors LIMIT 5;
+
+SELECT AVG(min_price) FROM vendors;
+
+select count(*) from vendors where max_price > 600;
+
+select * from vendors where order_capacity = 'small';
+
+SELECT * FROM vendors ORDER BY id DESC LIMIT 1;
+
+Select vendor_name from vendors where phone_number like '066%';
+
+Select title from vendors where quantity_products > 200 && order_capacity = 'big';
+
+select * from vendors where min_price > 50 || quantity_products; > 100;
+
+Select * from vendors order by quantity_products;
+
+Select * from vendors where quantity_products > (SELECT AVG(quantity_products) from vendors);
+
+update vendors set order_capacity = 'big' where max_price > 500;
+
+update vendors set vendor_name = 'Василий' where id = 7;
+
+DELETE FROM vendors WHERE id = (SELECT t1.id from (select * from vendors) as t1 ORDER BY t1.id DESC LIMIT 1, 1);
+
+delete from vendors;
+
+Drop table vendors;
