@@ -1,0 +1,1 @@
+There will be training tasks for Laravel and MySQL.
