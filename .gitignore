@@ -1,0 +1,7 @@
+/.idea
+nginx/*
+mysql/*
+php-cli/
+php-fpm/
+docker-compose.yml
+src/.env
