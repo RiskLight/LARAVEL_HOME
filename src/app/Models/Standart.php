@@ -5,12 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Format extends Model
+class Standart extends Model
 {
     use HasFactory;
-
     public function films ()
     {
-        return $this->belongsTo(Film::class);
+        return $this->hasMany(Film::class);
     }
 }

@@ -9,9 +9,11 @@ class Film extends Model
 {
     use HasFactory;
 
-    public function format ()
+    protected $fillable = ['name', 'description', 'year', 'custom_id', 'img_path', 'standart_id'];
+
+    public function standarts ()
     {
-        return $this->hasOne(Format::class);
+        return $this->belongsTo(Standart::class);
     }
 
     public function comments ()

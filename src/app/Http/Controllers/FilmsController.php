@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Film;
 use App\Models\Genre;
+use App\Models\Standart;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use PhpParser\PrettyPrinter\Standard;
 
 class FilmsController extends Controller
 {
@@ -53,7 +56,9 @@ class FilmsController extends Controller
     public function create()
     {
         //
-        return view('admin_panel.add_film');
+        $standarts = Standart::all();
+        $genres = Genre::all();
+        return view('admin_panel.add_film', ['standarts' => $standarts],['genres' => $genres] );
     }
 
     /**
@@ -65,6 +70,14 @@ class FilmsController extends Controller
     public function store(Request $request)
     {
         //
+        Film::create([
+            'name'=>$request->name,
+            'custom_id'=>$request->custom_id,
+            'img_path'=>$request->img_path,
+            'description'=>$request->description,
+            'year'=>$request->year,
+            'standart_id'=>$request->standart
+        ]);
     }
 
     /**
