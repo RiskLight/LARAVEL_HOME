@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Favorite extends Model
 {
     use HasFactory;
+
+    public function films ()
+    {
+        return $this->hasMany(Film::class);
+    }
 }

@@ -9,4 +9,8 @@ class Genre extends Model
 {
     use HasFactory;
 
+    public function film()
+    {
+        return $this->belongsToMany(Film::class);
+    }
 }
