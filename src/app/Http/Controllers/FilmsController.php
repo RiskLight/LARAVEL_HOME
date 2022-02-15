@@ -71,7 +71,7 @@ class FilmsController extends Controller
             'standart_id' => $request->standart,
         ]);
 
-        $film->genres->sync($request->genres);
+        $film->genres()->sync($request->genres);
 
         return redirect()->route('admin.films.create');
     }
