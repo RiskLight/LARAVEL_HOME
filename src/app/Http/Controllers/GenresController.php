@@ -2,17 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Film;
 use App\Models\Genre;
-use App\Models\Standart;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class FilmsController extends Controller
+class GenresController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,59 +18,29 @@ class FilmsController extends Controller
      */
     public function index()
     {
-        //
         $genres = Genre::all();
-        return view('site.main', ['genres' => $genres]);
+        return view('site.genre', ['genres' => $genres]);
     }
 
-    public function indexFavorite()
-    {
-        return view('site.favorite');
-    }
-
-    public function indexSerials()
-    {
-        //
-        $genres = Genre::all();
-        return view('site.serials', ['genres' => $genres]);
-    }
-    public function adminIndex()
-    {
-        return view('admin_panel.films');
-    }
     /**
      * Show the form for creating a new resource.
      *
-     * @return Application|Factory|View
+     * @return Response
      */
     public function create()
     {
         //
-        $standarts = Standart::all();
-        $genres = Genre::all();
-        return view('admin_panel.add_film', ['standarts' => $standarts,'genres' => $genres] );
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
-     * @return RedirectResponse
+     * @param  \Illuminate\Http\Request  $request
+     * @return Response
      */
     public function store(Request $request)
     {
-        $film = Film::create([
-            'name' => $request->name,
-            'custom_id' => $request->custom_id,
-            'img_path' => $request->img_path,
-            'description' => $request->description,
-            'year' => $request->year,
-            'standart_id' => $request->standart,
-        ]);
-
-        $film->genres->sync($request->genres);
-
-        return redirect()->route('admin.films.create');
+        //
     }
 
     /**
@@ -101,7 +68,7 @@ class FilmsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return Response
      */

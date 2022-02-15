@@ -39,7 +39,7 @@
                     </li>
                     <li class="nav-item p-2">
                         <a class="nav-link text-white hover:text-blue-700 focus:text-gray-600 p-0"
-                           href="{{route('films.genre')}}">По жанрам</a>
+                           href="{{route('films.genres')}}">По жанрам</a>
                     </li>
                 </ul>
                 <!-- Left links -->

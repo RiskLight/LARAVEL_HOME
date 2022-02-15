@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Standart extends Model
 {
     use HasFactory;
-    public function films ()
+    public function films()
     {
         return $this->hasMany(Film::class);
     }

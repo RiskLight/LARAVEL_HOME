@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class FormatSeeder extends Seeder
+class RoleSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,11 +14,10 @@ class FormatSeeder extends Seeder
      */
     public function run()
     {
-        //
-        DB::table('formats')->insert([
-            ['name'=>'Сериал'],
-            ['name'=>'Фильм']
-            ]);
-
+        DB::table('roles')->insert([
+            ['role'=>'admin'],
+            ['role'=>'moder'],
+            ['role'=>'user']
+        ]);
     }
 }

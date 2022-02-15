@@ -9,8 +9,13 @@ class Comment extends Model
 {
     use HasFactory;
 
-    public function films ()
+    public function films()
     {
         return $this->belongsToMany(Film::class);
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
     }
 }

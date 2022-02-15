@@ -11,18 +11,23 @@ class Film extends Model
 
     protected $fillable = ['name', 'description', 'year', 'custom_id', 'img_path', 'standart_id'];
 
-    public function standarts ()
+    public function standart()
     {
         return $this->belongsTo(Standart::class);
     }
 
-    public function comments ()
+    public function comments()
     {
         return $this->belongsToMany(Comment::class);
     }
 
-    public function favorites ()
+    public function users()
     {
-        return $this->belongsTo(Favorite::class);
+        return $this->belongsToMany(User::class);
+    }
+
+    public function genres()
+    {
+        return $this->belongsToMany(Genre::class, 'film_genres');
     }
 }

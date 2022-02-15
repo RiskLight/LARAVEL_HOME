@@ -42,8 +42,18 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function roles ()
+    public function role()
     {
-        return $this->belongsToMany(Role::class);
+        return $this->belongsTo(Role::class);
+    }
+
+    public function comments()
+    {
+        return $this->belongsToMany(Comment::class);
+    }
+
+    public function films()
+    {
+        return $this->belongsToMany(Film::class);
     }
 }

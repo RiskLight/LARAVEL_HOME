@@ -16,7 +16,7 @@ class CreateFilmUsersTable extends Migration
         Schema::create('film_users', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('favorite_id')->constrained('favorites');
+            $table->foreignId('film_id')->constrained('films');
             $table->timestamps();
         });
     }
