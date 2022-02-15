@@ -31,15 +31,19 @@
                 <ul class="navbar-nav flex flex-col pl-0 list-style-none mr-auto">
                     <li class="nav-item p-2">
                         <a class="nav-link text-white hover:text-blue-700 focus:text-gray-600 p-0"
+                           href="{{route('films.site')}}">Все фильмы</a>
+                    </li>
+                    <li class="nav-item p-2">
+                        <a class="nav-link text-white hover:text-blue-700 focus:text-gray-600 p-0"
                            href="{{route('films.site')}}">Фильмы</a>
                     </li>
                     <li class="nav-item p-2">
                         <a class="nav-link text-white hover:text-blue-700 focus:text-gray-600 p-0"
-                           href="{{route('films.serials')}}">Сериалы</a>
+                           href="{{route('films.site')}}">Сериалы</a>
                     </li>
                     <li class="nav-item p-2">
                         <a class="nav-link text-white hover:text-blue-700 focus:text-gray-600 p-0"
-                           href="{{route('films.genres')}}">По жанрам</a>
+                           href="{{route('genres.genres')}}">По жанрам</a>
                     </li>
                 </ul>
                 <!-- Left links -->

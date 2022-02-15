@@ -21,9 +21,8 @@ class FilmsController extends Controller
      */
     public function index()
     {
-        //
-        $genres = Genre::all();
-        return view('site.main', ['genres' => $genres]);
+        $films = Film::all();
+        return view('site.main', ['films' => $films]);
     }
 
     public function indexFavorite()
@@ -31,16 +30,13 @@ class FilmsController extends Controller
         return view('site.favorite');
     }
 
-    public function indexSerials()
-    {
-        //
-        $genres = Genre::all();
-        return view('site.serials', ['genres' => $genres]);
-    }
+
     public function adminIndex()
     {
-        return view('admin_panel.films');
+        $films = Film::all();
+        return view('admin_panel.films', ['films' => $films]);
     }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -51,7 +47,7 @@ class FilmsController extends Controller
         //
         $standarts = Standart::all();
         $genres = Genre::all();
-        return view('admin_panel.add_film', ['standarts' => $standarts,'genres' => $genres] );
+        return view('admin_panel.add_film', ['standarts' => $standarts, 'genres' => $genres]);
     }
 
     /**
@@ -64,14 +60,14 @@ class FilmsController extends Controller
     {
         $film = Film::create([
             'name' => $request->name,
-            'custom_id' => $request->custom_id,
+            'film_path' => $request->film_path,
             'img_path' => $request->img_path,
             'description' => $request->description,
             'year' => $request->year,
             'standart_id' => $request->standart,
         ]);
 
-        $film->genres()->sync($request->genres);
+        $film->genres()->sync($request->genre);
 
         return redirect()->route('admin.films.create');
     }
@@ -79,18 +75,19 @@ class FilmsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return Response
+     * @param int $id
+     * @return Application|Factory|View
      */
     public function show($id)
     {
-        //
+        $film = Film::find($id);
+        return view('site.film_page', ['film' => $film]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return Response
      */
     public function edit($id)
@@ -102,7 +99,7 @@ class FilmsController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param  int  $id
+     * @param int $id
      * @return Response
      */
     public function update(Request $request, $id)
@@ -113,7 +110,7 @@ class FilmsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return Response
      */
     public function destroy($id)

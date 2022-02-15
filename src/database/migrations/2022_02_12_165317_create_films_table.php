@@ -16,7 +16,7 @@ class CreateFilmsTable extends Migration
         Schema::create('films', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->bigInteger('custom_id');
+            $table->string('film_path');
             $table->string('img_path');
             $table->text('description');
             $table->integer('year');

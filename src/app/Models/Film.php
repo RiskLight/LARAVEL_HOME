@@ -9,7 +9,7 @@ class Film extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'year', 'custom_id', 'img_path', 'standart_id'];
+    protected $fillable = ['name', 'description', 'year', 'film_path', 'img_path', 'standart_id'];
 
     public function standart()
     {

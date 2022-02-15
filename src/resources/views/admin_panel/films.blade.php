@@ -7,18 +7,19 @@
     </div>
     <div class="max-w-full">
         <div class="grid lg:grid-cols-6 m-12">
+            @foreach($films as $film)
             <div class="border-2 p-6">
-                <a href="3" class="rounded-t-lg">ID</a>
+                <p class="rounded-t-lg">ID = {{$film->id}}</p>
             </div>
             <div>
-                <img class="rounded-t-lg" src="https://mdbootstrap.com/img/new/standard/nature/184.jpg" alt=""/>
+                <img class="rounded-t-lg" src="{{$film->img_path}}" alt=""/>
             </div>
             <div class="p-6 border-2">
-                <h5 class="text-gray-900 text-xl font-medium mb-2">Название</h5>
+                <h5 class="text-gray-900 text-xl font-medium mb-2">{{$film->name}}</h5>
             </div>
             <div class="p-6 border-2">
                 <p class="text-gray-700 text-base mb-4">
-                    Описание
+                    {{$film->description}}
                 </p>
             </div>
             <div class="p-6 border-2">
@@ -33,6 +34,7 @@
                     Удалить
                 </button>
             </div>
+            @endforeach
         </div>
     </div>
 @endsection
