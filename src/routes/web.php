@@ -17,9 +17,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
+Route::get('/', [FilmsController::class, 'index']);
 
 Route::group([
     'as' => 'admin.',
@@ -64,8 +62,8 @@ Route::group([
     'as' => 'films.',
     'prefix' => 'films'
 ], function () {
-    Route::get('/', [FilmsController::class, 'index'])->name('site');
-    Route::get('/{film}', [FilmsController::class, 'show'])->name('show');
+    Route::get('/{standartId?}/{genreId?}', [FilmsController::class, 'index'])->name('site');
+    Route::get('/{film}/show/film', [FilmsController::class, 'show'])->name('show');
     Route::get('/{user}/favorite', [FilmsController::class, 'indexFavorite'])->name('favorite');
 
 });

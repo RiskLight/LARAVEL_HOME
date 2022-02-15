@@ -35,11 +35,11 @@
                     </li>
                     <li class="nav-item p-2">
                         <a class="nav-link text-white hover:text-blue-700 focus:text-gray-600 p-0"
-                           href="{{route('films.site')}}">Фильмы</a>
+                           href="{{route('films.site', ['standartId' => 2])}}">Фильмы</a>
                     </li>
                     <li class="nav-item p-2">
                         <a class="nav-link text-white hover:text-blue-700 focus:text-gray-600 p-0"
-                           href="{{route('films.site')}}">Сериалы</a>
+                           href="{{route('films.site',  ['standartId' => 1])}}">Сериалы</a>
                     </li>
                     <li class="nav-item p-2">
                         <a class="nav-link text-white hover:text-blue-700 focus:text-gray-600 p-0"

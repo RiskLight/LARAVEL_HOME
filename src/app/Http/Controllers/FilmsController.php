@@ -19,9 +19,19 @@ class FilmsController extends Controller
      *
      * @return Application|Factory|View
      */
-    public function index()
+    public function index($standartId = null, $genreId = null)
     {
-        $films = Film::all();
+        if ($standartId && $standartId !== 'all') {
+            $films = Film::where('standart_id', $standartId)->get();
+        } else {
+            $films = Film::all();
+        }
+
+        if ($genreId) {
+            $films = Film::whereHas('genres', function ($query) use ($genreId) {
+                $query->where('genres.id', $genreId);
+            })->get();
+        }
         return view('site.main', ['films' => $films]);
     }
 

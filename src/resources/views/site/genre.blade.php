@@ -24,7 +24,7 @@
         @foreach($genres as $genre)
         <div class="flex justify-center">
             <div class="rounded-lg shadow-lg bg-white max-w-sm">
-                <a href="#!">
+                <a href="{{route('films.site', ['standartId' => 'all', 'genreId'=>$genre->id])}}">
                     <img class="rounded-t-lg" src="{{$genre->img_path}}" alt=""/>
                 </a>
                 <div class="p-6">

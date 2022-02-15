@@ -9,6 +9,12 @@
     <div class="text-3xl text-blue-500-600 text-center">
        Год выхода: {{$film->year}}
     </div>
+    <div class="text-3xl text-blue-500-600 text-center">
+        Жанры:
+        @foreach($film->genres as $genre)
+             {{$genre->name}}
+        @endforeach
+    </div>
     <div class="flex justify-around">
         <iframe src="{{$film->film_path}}" width="1080" height="720" frameborder="0" allowfullscreen></iframe>
     </div>
