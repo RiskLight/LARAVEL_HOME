@@ -18,7 +18,13 @@
             <a class="text-xl text-black font-semibold hover:text-blue-700" href="{{route('films.site')}}">На сайт</a>
         </div>
         <div class="container-fluid">
-            <a class="text-xl text-black font-semibold hover:text-blue-700" href="#">Выход</a>
+
+            <a class="text-xl text-black font-semibold hover:text-blue-700" href="{{route('logout')}}"
+               onclick="event.preventDefault();
+               document.getElementById('logout-form').submit();">Выход</a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                @csrf
+            </form>
         </div>
     </div>
 </nav>

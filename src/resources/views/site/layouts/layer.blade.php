@@ -50,16 +50,12 @@
             </div>
             <div class="dropdown relative flex justify-between px-6 w-56">
                 <div>
-                    <a class="dropdown-toggle flex items-center hidden-arrow hover:text-blue-700" href="#"
-                       id="dropdownMenuButton2"
-                       role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="dropdown-toggle flex items-center hidden-arrow hover:text-blue-700" href="{{route('login')}}">
                         Вход
                     </a>
                 </div>
                 <div>
-                    <a class="dropdown-toggle flex items-center hidden-arrow hover:text-blue-700" href="#"
-                       id="dropdownMenuButton2"
-                       role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="dropdown-toggle flex items-center hidden-arrow hover:text-blue-700" href="{{route('register')}}">
                         Регистрация
                     </a>
                 </div>

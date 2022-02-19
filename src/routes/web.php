@@ -4,6 +4,7 @@ use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\FilmsController;
 use App\Http\Controllers\GenresController;
 use App\Http\Controllers\UsersController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,7 +22,8 @@ Route::get('/', [FilmsController::class, 'index']);
 
 Route::group([
     'as' => 'admin.',
-    'prefix' => 'admin/'
+    'prefix' => 'admin/',
+//    'middleware' => 'admin'
 ], function () {
     Route::group([
         'as' => 'films.',
@@ -53,8 +55,8 @@ Route::group([
         'prefix' => 'comments'
     ], function () {
         Route::get('/', [CommentsController::class, 'index'])->name('index');
-        Route::put('/{comment}', [CommentsController::class, 'update'])->name('publish');
-        Route::delete('/{comment}', [CommentsController::class, 'destroy'])->name('destroy');
+        Route::put('/comments/{comment}', [CommentsController::class, 'update'])->name('publish');
+        Route::delete('/comments/destroy/{comment}', [CommentsController::class, 'destroy'])->name('destroy');
     });
 });
 
@@ -82,3 +84,7 @@ Route::group([
     Route::post('/', [CommentsController::class, 'store'])->name('store');
     Route::get('/{film}', [CommentsController::class, 'show'])->name('show');
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
