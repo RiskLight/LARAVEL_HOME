@@ -19,7 +19,6 @@
     </li>
 @endsection
 @section('main_content')
-    <div class="text-green-800 text-center text-4xl">Недоработанная хуета</div>
     <div class="grid grid-cols-3 gap-12 m-12">
         @foreach($genres as $genre)
         <div class="flex justify-center">

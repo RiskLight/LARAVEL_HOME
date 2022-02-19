@@ -98,11 +98,15 @@ class FilmsController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return Response
+     * @return Application|Factory|View
      */
     public function edit($id)
     {
-        //
+        $film = Film::find($id);
+        $standarts = Standart::all();
+        $genres =  Genre::all();
+
+        return view('admin_panel.edit_film', ['film' => $film, 'standarts' => $standarts, 'genres' => $genres]);
     }
 
     /**
@@ -110,21 +114,26 @@ class FilmsController extends Controller
      *
      * @param Request $request
      * @param int $id
-     * @return Response
+     * @return RedirectResponse
      */
     public function update(Request $request, $id)
     {
-        //
+        $data =$request->except('_token', '_method');
+        $film = Film::find($id);
+        $film->update($data);
+        return redirect()->route('admin.films.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return Response
+     * @return RedirectResponse
      */
     public function destroy($id)
     {
-        //
+        $film = Film::find($id);
+        $film->delete();
+        return redirect()->route('admin.films.index');
     }
 }

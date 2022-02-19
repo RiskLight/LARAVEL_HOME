@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFilmUsersTable extends Migration
+class CreateFilmUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateFilmUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('film_users', function (Blueprint $table) {
+        Schema::create('film_user', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('film_id')->constrained('films');
+            $table->foreignId('user_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('film_id')->constrained('films')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
     }

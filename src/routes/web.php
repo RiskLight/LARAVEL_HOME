@@ -30,9 +30,9 @@ Route::group([
         Route::get('/', [FilmsController::class, 'adminIndex'])->name('index');
         Route::get('/create', [FilmsController::class, 'create'])->name('create');
         Route::post('/', [FilmsController::class, 'store'])->name('store');
-        Route::post('/{film}/edit', [FilmsController::class, 'edit'])->name('edit');
-        Route::put('/{film}', [FilmsController::class, 'update'])->name('edit');
-        Route::delete('/{film}', [FilmsController::class, 'destroy'])->name('destroy');
+        Route::get('/{film}/edit', [FilmsController::class, 'edit'])->name('edit');
+        Route::put('/update/{film}', [FilmsController::class, 'update'])->name('update');
+        Route::delete('/destroy/{film}', [FilmsController::class, 'destroy'])->name('destroy');
     });
 
     Route::group([
@@ -43,7 +43,7 @@ Route::group([
         Route::get('/create', [UsersController::class, 'create'])->name('create');
         Route::post('/', [UsersController::class, 'store'])->name('store');
         Route::get('/{user}', [UsersController::class, 'show'])->name('show');
-        Route::post('/{user}/edit', [UsersController::class, 'edit'])->name('edit');
+        Route::post('/change/{user}/edit', [UsersController::class, 'edit'])->name('edit');
         Route::put('/{user}', [UsersController::class, 'update'])->name('edit');
         Route::delete('/{user}', [UsersController::class, 'destroy'])->name('destroy');
     });

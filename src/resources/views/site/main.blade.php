@@ -1,7 +1,6 @@
 @extends('site.layouts.layer')
-@section('title', 'Фильмы')
+@section('title', 'Фильмы и сериалы')
 @section('main_content')
-    <div class="text-green-800 text-center text-4xl">Временная хуета</div>
     <div class="grid xl:grid-cols-6 gap-12 m-12">
         @foreach($films as $film)
             <div class="flex justify-center">

@@ -29,7 +29,7 @@
                 <a href="{{route('admin.films.index')}}" class="cursor-pointer rounded-l px-6 py-2 border-2 border-blue-600 text-blue-600 font-medium text-xs leading-tight uppercase hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
                     Фильмы
                 </a>
-                <a href="{{route('admin.films.create')}}" class="cursor-pointer px-6 py-2 border-t-2 border-b-2 border-r border-blue-600 text-blue-600 font-medium text-xs leading-tight uppercase hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
+                <a href="{{route('admin.films.create')}}" class="cursor-pointer px-6 py-2 border-t-2 border-b-2 border-r-0 border-blue-600 text-blue-600 font-medium text-xs leading-tight uppercase hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
                     Добавить фильм
                 </a>
                 <a href="{{route('admin.users.index')}}" class="cursor-pointer px-6 py-2 border-t-2 border-b-2 border-l border-blue-600 text-blue-600 font-medium text-xs leading-tight uppercase hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">

@@ -1,6 +1,6 @@
 @extends('site.layouts.layer')
 @section('title')
-    Фильм
+    {{$film->name}}
 @endsection
 @section('main_content')
     <div class="text-6xl text-blue-700 text-center">
