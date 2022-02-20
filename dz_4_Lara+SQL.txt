@@ -1,0 +1,107 @@
+1.Получить первые 5 записей с таблицы.
+
+$vendors = DB::table('vendors')
+            ->limit(5)
+            ->get();
+
+$vendors = DB::table('vendors')
+            ->take(5)
+            ->get();
+
+2. Получить среднюю минимальную цену по всем записям.
+
+$vendors = DB::table('vendors')
+            ->avg('min_price');
+
+3. Получить количество продавцов, у которых максимальная цена за товар больше 600.
+
+$vendors = DB::table('vendors')
+            ->where('max_price', '>', 600)
+            ->count();
+
+4. Получить все записи, у которых объем продаж равен small.
+
+$vendors = DB::table('vendors')
+            ->where('order_capacity', 'small')
+            ->get();
+
+5. Получить последнюю запись.
+
+$vendors = DB::table('vendors')
+            ->latest()
+            ->first();
+
+6. Получить ИМЕНА продавцов, номер телефона которых начинается с '066'.
+
+$vendors = DB::table('vendors')
+            ->where('quantity_products', 'like', '066%')
+            ->value('vendor_name');
+
+7. Получить НАЗВАНИЯ МАГАЗИНОВ, количество товаров у которых больше 200 И объем продаж равен big.
+
+$vendors = DB::table('vendors')
+            ->where('quantity_products', '>', 200)
+            ->where('order_capacity', 'big')
+            ->value('title');
+
+8. Получить все записи, минимальная цена на товар у которых больше 50 ИЛИ количество товаров больше 100.
+
+$vendors = DB::table('vendors')
+            ->where('min_price', '>', 50)
+            ->orWhere('quantity_products', 100)
+            ->get();
+
+9. Получить все записи, отсортированные по количеству товаров (по возрастанию).
+
+$vendors = DB::table('vebdors')
+            ->orderBy('quantity_products', 'asc')
+            ->get();
+
+10. Получить записи, количество товаров у которых больше средней (подзапрос).
+
+$avg = DB::table('vendors')
+            ->avg('price')
+            ->get();
+
+$vendors = DB::table('vendors')
+            ->where('quantity_products', '>', $avg)
+            ->get();
+
+11. Получить пользователей по всем книгам, хранящимся в бд (название книги, имя и возраст пользователя).
+
+$users = DB::table('book_users')
+            ->join('users.id', '=', 'book_users.id')
+            ->join('books.id', '=', 'book_users.id')
+            ->select('books.name', 'users.name', 'users.age')
+            ->get();
+
+12. Получить авторов первой книги.
+
+$user = DB::table('author_books')
+            ->join('authors.id', '=', 'author_books.id')
+            ->select('authors.name')
+            ->first();
+
+13. Получить жанры и издательства книг (название книги, название жанра, названия издательств).
+
+$users = DB::table('book_users')
+            ->join('users.id', '=', 'book_users.id')
+            ->join('books.id', '=', 'book_users.id')
+            ->select('books.name', 'users.name', 'users.age')
+            ->get();
+
+14. Получить издательства последней книги.
+$publisher = DB::table('book_publishers')
+            ->join('publishers.id', '=', 'books_publishers.id')
+            ->join('books.id', '=', 'books_publishers.id')
+            ->select('publishers.name')
+            ->latest();
+15. Получить жанры книг третьего пользователя (имя юзера, название книги, название жанра).
+
+$genres = DB::table('book_users')
+            ->join('users.id', '=', 'books_users.id')
+            ->join('books.id', '=', 'books_users.id')
+            ->join('genres.id', '=', 'books.genres_id')
+            ->select('users.name', 'books.name', 'genre.name')
+            ->where('user.id', 3)
+            ->get();
