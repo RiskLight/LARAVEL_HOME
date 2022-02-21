@@ -49,6 +49,7 @@
                 <!-- Left links -->
             </div>
             <div class="dropdown relative flex justify-between px-6 w-56">
+                @guest
                 <div>
                     <a class="dropdown-toggle flex items-center hidden-arrow hover:text-blue-700" href="{{route('login')}}">
                         Вход
@@ -59,6 +60,23 @@
                         Регистрация
                     </a>
                 </div>
+                @else
+                    <div>
+                        <a class="flex items-center hidden-arrow hover:text-blue-700" href="{{route('favorites.favorite')}}">
+                            Избранное
+                        </a>
+                    </div>
+                    <div>
+                        <a class="dropdown-toggle flex items-center hidden-arrow hover:text-blue-700"  href="{{ route('logout') }}"
+                           onclick="event.preventDefault();
+                           document.getElementById('logout-form').submit();">
+                            Выйти
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                    </div>
+                @endguest
             </div>
         </div>
     </nav>

@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Film;
 use App\Models\Genre;
 use App\Models\Standart;
+use http\Client\Curl\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 
 class FilmsController extends Controller
 {
@@ -32,19 +34,19 @@ class FilmsController extends Controller
                 $query->where('genres.id', $genreId);
             })->get();
         }
-        return view('site.main', ['films' => $films]);
-    }
+//        return view('site.main', ['films' => $films, ]);
+        return view('site.main', ['films' => DB::table('films')->paginate(1)]);
 
-    public function indexFavorite()
-    {
-        return view('site.favorite');
     }
-
 
     public function adminIndex()
     {
         $films = Film::all();
-        return view('admin_panel.films', ['films' => $films]);
+        return view('admin_panel.films', ['films' => DB::table('films')->paginate(1)]);
+    }
+
+    public function getFav() {
+        return view('site.favorite');
     }
 
     /**
@@ -76,7 +78,8 @@ class FilmsController extends Controller
             'year' => $request->year,
             'standart_id' => $request->standart,
         ]);
-
+//        $film = $request->except('_token');
+//        Film::create($film);
         $film->genres()->sync($request->genre);
 
         return redirect()->route('admin.films.create');
@@ -104,7 +107,7 @@ class FilmsController extends Controller
     {
         $film = Film::find($id);
         $standarts = Standart::all();
-        $genres =  Genre::all();
+        $genres = Genre::all();
 
         return view('admin_panel.edit_film', ['film' => $film, 'standarts' => $standarts, 'genres' => $genres]);
     }
@@ -118,9 +121,10 @@ class FilmsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data =$request->except('_token', '_method');
+        $data = $request->except('_token', '_method');
         $film = Film::find($id);
         $film->update($data);
+        $film->genres()->sync($request->genre);
         return redirect()->route('admin.films.index');
     }
 
@@ -137,3 +141,4 @@ class FilmsController extends Controller
         return redirect()->route('admin.films.index');
     }
 }
+

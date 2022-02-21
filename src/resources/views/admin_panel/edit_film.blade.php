@@ -1,6 +1,6 @@
 @extends('admin_panel.layouts.admin_layer')
 
-@section('title', "Редактировать фильма $film->name")
+@section('title', "Редактировать фильм $film->name")
 
 @section('working_place')
     <div class="block p-6 rounded-lg shadow-lg bg-white max-w-full">

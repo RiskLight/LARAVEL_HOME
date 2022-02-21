@@ -37,5 +37,8 @@
                 </div>
             @endforeach
         </div>
+        <div class="flex justify-evenly">
+            {{ $films->links() }}
+        </div>
     </div>
 @endsection

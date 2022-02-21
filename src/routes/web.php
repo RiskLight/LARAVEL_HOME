@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [FilmsController::class, 'index']);
-
+//Route::get('/admin', [FilmsController::class, 'adminIndex'])->middleware(\App\Http\Middleware\Admin::class);
 Route::group([
     'as' => 'admin.',
     'prefix' => 'admin/',
@@ -45,9 +45,9 @@ Route::group([
         Route::get('/create', [UsersController::class, 'create'])->name('create');
         Route::post('/', [UsersController::class, 'store'])->name('store');
         Route::get('/{user}', [UsersController::class, 'show'])->name('show');
-        Route::post('/change/{user}/edit', [UsersController::class, 'edit'])->name('edit');
-        Route::put('/{user}', [UsersController::class, 'update'])->name('edit');
-        Route::delete('/{user}', [UsersController::class, 'destroy'])->name('destroy');
+        Route::get('/change/{user}/edit', [UsersController::class, 'edit'])->name('edit');
+        Route::put('/{user}', [UsersController::class, 'update'])->name('update');
+        Route::delete('/destroy/user/{user}', [UsersController::class, 'destroy'])->name('destroy');
     });
 
     Route::group([
@@ -66,15 +66,21 @@ Route::group([
 ], function () {
     Route::get('/{standartId?}/{genreId?}', [FilmsController::class, 'index'])->name('site');
     Route::get('/{film}/show/film', [FilmsController::class, 'show'])->name('show');
-    Route::get('/{user}/favorite', [FilmsController::class, 'indexFavorite'])->name('favorite');
-
 });
+
 
 Route::group([
     'as' => 'genres.',
     'prefix' => 'genres'
 ], function () {
     Route::get('/', [GenresController::class, 'index'])->name('genres');
+});
+
+Route::group([
+    'as' => 'favorites.',
+    'prefix' => 'favorites'
+], function () {
+    Route::get('/favorite', [FilmsController::class, 'getFav'])->name('favorite');
 });
 
 Route::group([
