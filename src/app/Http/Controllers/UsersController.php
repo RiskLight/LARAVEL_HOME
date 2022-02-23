@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserRequest;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
@@ -10,6 +11,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
@@ -38,12 +40,13 @@ class UsersController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param UserRequest $request
      * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
         $data = $request->except('_token');
+        $data['password'] = Hash::make($request->password);
         User::create($data);
         return redirect()->route('admin.users.index');
     }
@@ -75,11 +78,11 @@ class UsersController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     * @param  int  $id
+     * @param UserRequest $request
+     * @param int $id
      * @return RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
         $data = $request->except('_token', 'method');
         $user = User::find($id);

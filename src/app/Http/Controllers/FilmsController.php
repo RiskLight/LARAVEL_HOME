@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FilmRequest;
 use App\Models\Film;
 use App\Models\Genre;
 use App\Models\Standart;
@@ -24,25 +25,24 @@ class FilmsController extends Controller
     public function index($standartId = null, $genreId = null)
     {
         if ($standartId && $standartId !== 'all') {
-            $films = Film::where('standart_id', $standartId)->get();
+            $films = Film::where('standart_id', $standartId)->paginate(1);
         } else {
-            $films = Film::all();
+            $films = Film::paginate(1);
         }
 
         if ($genreId) {
             $films = Film::whereHas('genres', function ($query) use ($genreId) {
                 $query->where('genres.id', $genreId);
-            })->get();
+            })->paginate(1);
         }
-//        return view('site.main', ['films' => $films, ]);
-        return view('site.main', ['films' => DB::table('films')->paginate(1)]);
+        return view('site.main', ['films' => $films]);
 
     }
 
     public function adminIndex()
     {
-        $films = Film::all();
-        return view('admin_panel.films', ['films' => DB::table('films')->paginate(1)]);
+        $films = Film::paginate(1);
+        return view('admin_panel.films', ['films' => $films]);
     }
 
     public function getFav() {
@@ -65,21 +65,25 @@ class FilmsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param FilmRequest $request
      * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(FilmRequest $request)
     {
-        $film = Film::create([
-            'name' => $request->name,
-            'film_path' => $request->film_path,
-            'img_path' => $request->img_path,
-            'description' => $request->description,
-            'year' => $request->year,
-            'standart_id' => $request->standart,
-        ]);
-//        $film = $request->except('_token');
-//        Film::create($film);
+//        $film = Film::create([
+//            'name' => $request->name,
+//            'film_path' => $request->film_path,
+//            'img_path' => $request->file('img_path')->store('images'),
+//            'description' => $request->description,
+//            'year' => $request->year,
+//            'standart_id' => $request->standart,
+//
+//        ]);
+        $data = $request->except('_token', 'genres');
+        $data['img_path'] = $request->file('img_path')->store('images');
+
+        $film = Film::create($data);
+
         $film->genres()->sync($request->genre);
 
         return redirect()->route('admin.films.create');
@@ -122,6 +126,9 @@ class FilmsController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->except('_token', '_method');
+        if ($request->hasFile('img_path')) {
+            $data['img_path'] = $request->file('img_path')->store('images');
+        }
         $film = Film::find($id);
         $film->update($data);
         $film->genres()->sync($request->genre);

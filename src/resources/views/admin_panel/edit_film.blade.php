@@ -4,7 +4,7 @@
 
 @section('working_place')
     <div class="block p-6 rounded-lg shadow-lg bg-white max-w-full">
-        <form action="{{route('admin.films.update', ['film' => $film->id])}}" method="POST">
+        <form action="{{route('admin.films.update', ['film' => $film->id])}}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="form-group mb-6">
@@ -15,10 +15,10 @@
             <div class="form-group mb-6">
                 <input type="text" name="film_path"
                        class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300  rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                       id="film_path" value="{{$film->img_path}}">
+                       id="film_path" value="{{$film->film_path}}">
             </div>
             <div class="form-group mb-6">
-                <input type="text" name="img_path"
+                <input type="file" name="img_path"
                        class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                        id="img_path" value="{{$film->img_path}}">
             </div>

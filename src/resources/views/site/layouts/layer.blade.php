@@ -61,11 +61,19 @@
                     </a>
                 </div>
                 @else
+                    @if (auth()->user()->role_id === 2)
                     <div>
                         <a class="flex items-center hidden-arrow hover:text-blue-700" href="{{route('favorites.favorite')}}">
                             Избранное
                         </a>
                     </div>
+                    @else
+                        <div>
+                            <a class="flex items-center hidden-arrow hover:text-blue-700" href="#">
+                                dskjfhnjdsklfj
+                            </a>
+                        </div>
+                    @endif
                     <div>
                         <a class="dropdown-toggle flex items-center hidden-arrow hover:text-blue-700"  href="{{ route('logout') }}"
                            onclick="event.preventDefault();

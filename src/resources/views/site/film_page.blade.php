@@ -18,12 +18,19 @@
     <div class="flex justify-around mt-12">
         <iframe src="{{$film->film_path}}" width="1080" height="720" frameborder="0" allowfullscreen></iframe>
     </div>
+{{--    <div>--}}
+{{--        <form action="" method="post">--}}
+{{--            <button type="submit">--}}
+{{--                Knopka--}}
+{{--            </button>--}}
+{{--        </form>--}}
+{{--    </div>--}}
     <div class="text-2xl w-3/4 mr-auto ml-auto mt-20 flex justify-around">
         <div>{{$film->description}}</div>
     </div>
     <!-- comment form -->
     <div class="flex mt-20 mx-auto items-center justify-center shadow-lg mt-56 mx-8 mb-4 w-3/4">
-        <form class="w-full bg-white rounded-lg px-4 pt-2">
+        <form class="w-full bg-white rounded-lg px-4 pt-2" method="post">
             <div class="flex flex-wrap -mx-3 mb-6">
                 <h2 class="px-4 pt-3 pb-2 text-gray-800 text-lg">Добавьте свой бред</h2>
                 <div class="w-full md:w-full px-3 mb-2 mt-2">
@@ -40,9 +47,10 @@
                         <p class="text-xs md:text-sm pt-px">Я хз зачем здесь какой-то текст</p>
                     </div>
                     <div class="-mr-1">
-                        <input type='submit'
-                               class="bg-white text-gray-700 font-medium py-1 px-4 border border-gray-400 rounded-lg tracking-wide mr-1 hover:bg-gray-100"
-                               value="Добавьте комментарий">
+                        <button type='submit'
+                               class="bg-white text-gray-700 font-medium py-1 px-4 border border-gray-400 rounded-lg tracking-wide mr-1 hover:bg-gray-100">
+                            Добавьте комментарий
+                        </button>
                     </div>
                 </div>
             </div>

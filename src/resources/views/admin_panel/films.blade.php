@@ -9,7 +9,8 @@
                     <p class="rounded-t-lg">ID = {{$film->id}}</p>
                 </div>
                 <div>
-                    <img class="rounded-t-lg" src="{{$film->img_path}}" alt=""/>
+                    <img class="rounded-t-lg" src="{{ asset("storage/$film->img_path") }}" alt=""/>
+{{--                    {{ asset("storage/$film->img_path") }}--}}
                 </div>
                 <div class="p-6 border-2">
                     <h5 class="text-gray-900 text-xl font-medium mb-2">{{$film->name}}</h5>

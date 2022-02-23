@@ -4,27 +4,39 @@
 @section('working_place')
 
     <div class="block p-6 rounded-lg shadow-lg bg-white max-w-full">
-        <form action="{{route('admin.films.store')}}" method="POST">
+        <form action="{{route('admin.films.store')}}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group mb-6">
                 <input type="text" name="name"
                        class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300  rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                        id="name" placeholder="Название фильма">
+                @error('name')
+                <div class="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">{{ $message }}</div>
+                @enderror
             </div>
             <div class="form-group mb-6">
                 <input type="text" name="film_path"
                        class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300  rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                        id="film_path" placeholder="Ссылка на фильм">
+                @error('film_path')
+                <div class="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">{{ $message }}</div>
+                @enderror
             </div>
             <div class="form-group mb-6">
-                <input type="text" name="img_path"
+                <input type="file" name="img_path"
                        class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                        id="img_path" placeholder="Путь к картинке">
+                @error('img_path')
+                <div class="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">{{ $message }}</div>
+                @enderror
             </div>
             <div class="form-group mb-6">
                 <input type="text" name="year"
                        class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                        id="year" placeholder="Год выхода">
+                @error('year')
+                <div class="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">{{ $message }}</div>
+                @enderror
             </div>
             <div class="form-group mb-6">
                 <textarea name="description"
@@ -32,9 +44,9 @@
                 id="description" rows="3" placeholder="Описание фильма"></textarea>
             </div>
             <div class="form-group mb-6">
-                <select name="standart"
+                <select name="standart_id"
                         class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                        id="standart">
+                        id="standart_id">
                     @foreach($standarts as $standart)
                         <option value="{{$standart->id}}">{{$standart->name}}</option>
                     @endforeach
@@ -75,6 +87,9 @@
                                     </div>
                                 @endforeach
                             </div>
+                            @error('genre')
+                            <div class="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                 </div>
