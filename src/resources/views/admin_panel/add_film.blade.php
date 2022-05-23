@@ -1,18 +1,25 @@
 @extends('admin_panel.layouts.admin_layer')
-@section('title')Добавление фильма
-@endsection
+@section('title', 'Добавление фильма')
 @section('working_place')
 
-    <div class="block p-6 rounded-lg shadow-lg bg-white max-w-full">
+    <div class="block p-6 rounded-lg shadow-lg bg-white max-w-full h-screen">
         <form action="{{route('admin.films.store')}}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group mb-6">
-                <input type="text" name="name"
+                <input type="text" name="name" list="film"
                        class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300  rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                        id="name" placeholder="Название фильма">
+                <datalist id="film">
+
+                </datalist>
+{{--                <button type="button" id="check"--}}
+{{--                        class="w-full px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">--}}
+{{--                    Проверить фильм--}}
+{{--                </button>--}}
                 @error('name')
                 <div class="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">{{ $message }}</div>
                 @enderror
+                <ul class="films"></ul>
             </div>
             <div class="form-group mb-6">
                 <input type="text" name="film_path"
@@ -87,13 +94,13 @@
                                     </div>
                                 @endforeach
                             </div>
-                            @error('genre')
-                            <div class="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">{{ $message }}</div>
-                            @enderror
                         </div>
                     </div>
                 </div>
             </div>
+            @error('genre')
+            <div class="border mt-0 mb-20 border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">{{ $message }}</div>
+            @enderror
             <button type="submit"
                     class="w-full px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
                 Добавить фильм

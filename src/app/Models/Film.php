@@ -18,7 +18,7 @@ class Film extends Model
 
     public function comments()
     {
-        return $this->belongsToMany(Comment::class);
+        return $this->hasMany(Comment::class);
     }
 
     public function users()
@@ -29,5 +29,10 @@ class Film extends Model
     public function genres()
     {
         return $this->belongsToMany(Genre::class, 'film_genre');
+    }
+
+    public function rate()
+    {
+        return $this->belongsToMany(Rate::class, 'rate');
     }
 }

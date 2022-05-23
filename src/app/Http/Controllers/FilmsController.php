@@ -25,15 +25,15 @@ class FilmsController extends Controller
     public function index($standartId = null, $genreId = null)
     {
         if ($standartId && $standartId !== 'all') {
-            $films = Film::where('standart_id', $standartId)->paginate(1);
+            $films = Film::where('standart_id', $standartId)->paginate(2);
         } else {
-            $films = Film::paginate(1);
+            $films = Film::paginate(2);
         }
 
         if ($genreId) {
             $films = Film::whereHas('genres', function ($query) use ($genreId) {
                 $query->where('genres.id', $genreId);
-            })->paginate(1);
+            })->paginate(2);
         }
         return view('site.main', ['films' => $films]);
 
@@ -41,13 +41,10 @@ class FilmsController extends Controller
 
     public function adminIndex()
     {
-        $films = Film::paginate(1);
+        $films = Film::paginate(2);
         return view('admin_panel.films', ['films' => $films]);
     }
 
-    public function getFav() {
-        return view('site.favorite');
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -83,7 +80,6 @@ class FilmsController extends Controller
         $data['img_path'] = $request->file('img_path')->store('images');
 
         $film = Film::create($data);
-
         $film->genres()->sync($request->genre);
 
         return redirect()->route('admin.films.create');
@@ -119,11 +115,11 @@ class FilmsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param FilmRequest $request
      * @param int $id
      * @return RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(FilmRequest $request, $id)
     {
         $data = $request->except('_token', '_method');
         if ($request->hasFile('img_path')) {

@@ -9,6 +9,40 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/index.min.css"/>
     <title>@yield('title')</title>
+    <style>
+        div.stars {
+            width: 500px;
+            display: flex;
+        }
+        input.star { display: none; }
+        label.star {
+            float: right;
+            padding: 10px;
+            font-size: 52px;
+            color: #444;
+            transition: all .2s;
+        }
+        input.star:checked ~ label.star:before {
+            content: '\f005';
+            color: #FD4;
+            transition: all .25s;
+        }
+        input.star-10:checked ~ label.star:before {
+            color: #FE7;
+            text-shadow: 0 0 20px #952;
+        }
+        input.star-1:checked ~ label.star:before { color: #F62; }
+        label.star:hover { transform: rotate(-15deg) scale(1.3); }
+        label.star:before {
+            content: '\f006';
+            font-family: FontAwesome, serif;
+        }
+
+        .class {
+            display: flex;
+            flex-direction: row-reverse;
+        }
+    </style>
 </head>
 <body>
 <header>
@@ -26,7 +60,8 @@
                 </svg>
             </button>
             <div class="collapse navbar-collapse flex-grow items-center" id="navbarSupportedContent1">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/d/db/Zeronet_logo.png" alt="logo" width="32" height="32">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/d/db/Zeronet_logo.png" alt="logo" width="32"
+                     height="32">
                 <!-- Left links -->
                 <ul class="navbar-nav flex flex-col pl-0 list-style-none mr-auto">
                     <li class="nav-item p-2">
@@ -50,32 +85,36 @@
             </div>
             <div class="dropdown relative flex justify-between px-6 w-56">
                 @guest
-                <div>
-                    <a class="dropdown-toggle flex items-center hidden-arrow hover:text-blue-700" href="{{route('login')}}">
-                        Вход
-                    </a>
-                </div>
-                <div>
-                    <a class="dropdown-toggle flex items-center hidden-arrow hover:text-blue-700" href="{{route('register')}}">
-                        Регистрация
-                    </a>
-                </div>
-                @else
-                    @if (auth()->user()->role_id === 2)
                     <div>
-                        <a class="flex items-center hidden-arrow hover:text-blue-700" href="{{route('favorites.favorite')}}">
-                            Избранное
+                        <a class="dropdown-toggle flex items-center hidden-arrow hover:text-blue-700"
+                           href="{{route('login')}}">
+                            Вход
                         </a>
                     </div>
+                    <div>
+                        <a class="dropdown-toggle flex items-center hidden-arrow hover:text-blue-700"
+                           href="{{route('register')}}">
+                            Регистрация
+                        </a>
+                    </div>
+                @else
+                    @if (auth()->user()->role_id === 2)
+                        <div>
+                            <a class="flex items-center hidden-arrow hover:text-blue-700"
+                               href="{{route('favorites.favorite')}}">
+                                Избранное
+                            </a>
+                        </div>
                     @else
                         <div>
-                            <a class="flex items-center hidden-arrow hover:text-blue-700" href="#">
-                                dskjfhnjdsklfj
+                            <a class="flex items-center hidden-arrow hover:text-blue-700" href="{{route('admin.films.index')}}">
+                                Админка
                             </a>
                         </div>
                     @endif
                     <div>
-                        <a class="dropdown-toggle flex items-center hidden-arrow hover:text-blue-700"  href="{{ route('logout') }}"
+                        <a class="dropdown-toggle flex items-center hidden-arrow hover:text-blue-700"
+                           href="{{ route('logout') }}"
                            onclick="event.preventDefault();
                            document.getElementById('logout-form').submit();">
                             Выйти

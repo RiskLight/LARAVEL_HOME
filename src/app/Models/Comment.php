@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,13 +10,22 @@ class Comment extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['description', 'user_id', 'film_id'];
+
+
     public function films()
     {
-        return $this->belongsToMany(Film::class);
+        return $this->belongsTo(Film::class);
     }
 
-    public function users()
+    public function user()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsTo(User::class);
     }
+
+    public function getDateAsCarbonAttribute()
+    {
+     return Carbon::parse($this->created_at);
+    }
+
 }

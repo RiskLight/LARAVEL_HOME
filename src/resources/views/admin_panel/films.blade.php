@@ -8,21 +8,18 @@
                 <div class="border-2 p-6">
                     <p class="rounded-t-lg">ID = {{$film->id}}</p>
                 </div>
-                <div>
+                <div class="border-2 max-w-xs flex items-center justify-center">
                     <img class="rounded-t-lg" src="{{ asset("storage/$film->img_path") }}" alt=""/>
-{{--                    {{ asset("storage/$film->img_path") }}--}}
                 </div>
                 <div class="p-6 border-2">
                     <h5 class="text-gray-900 text-xl font-medium mb-2">{{$film->name}}</h5>
                 </div>
-                <div class="p-6 border-2">
-                    <p class="text-gray-700 text-base mb-4">
+                <div class="p-6 border-2 text-sm">
                         {{$film->description}}
-                    </p>
                 </div>
                 <div class="p-6 border-2">
                     <a href="{{route('admin.films.edit', ['film' => $film->id])}}"
-                       class=" inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
+                       class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
                         Редактировать
                     </a>
                 </div>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CommentsController;
+use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\FilmsController;
 use App\Http\Controllers\GenresController;
 use App\Http\Controllers\UsersController;
@@ -19,11 +20,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [FilmsController::class, 'index']);
-//Route::get('/admin', [FilmsController::class, 'adminIndex'])->middleware(\App\Http\Middleware\Admin::class);
+Route::get('/admin', [FilmsController::class, 'adminIndex'])->middleware(\App\Http\Middleware\Admin::class);
 Route::group([
     'as' => 'admin.',
     'prefix' => 'admin/',
-//    'middleware' => 'admin'
+    'middleware' => 'admin'
 ], function () {
     Route::group([
         'as' => 'films.',
@@ -66,6 +67,13 @@ Route::group([
 ], function () {
     Route::get('/{standartId?}/{genreId?}', [FilmsController::class, 'index'])->name('site');
     Route::get('/{film}/show/film', [FilmsController::class, 'show'])->name('show');
+
+    Route::group([
+        'as' => 'comments.',
+        'prefix' => '{film}/comments'
+    ], function () {
+        Route::post('/', [CommentsController::class, 'store'])->name('store');
+    });
 });
 
 
@@ -80,7 +88,7 @@ Route::group([
     'as' => 'favorites.',
     'prefix' => 'favorites'
 ], function () {
-    Route::get('/favorite', [FilmsController::class, 'getFav'])->name('favorite');
+    Route::get('/favorite', [FavoriteController::class, 'index'])->name('favorite');
 });
 
 Route::group([
