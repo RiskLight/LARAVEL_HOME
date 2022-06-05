@@ -17,7 +17,7 @@
             </div>
             <div class="p-6 border-2">
                 <p class="text-gray-700 text-base mb-4">
-                    {{$user->role_id}}
+                    {{$user->role->role}}
                 </p>
             </div>
             <div class="p-6 border-2">

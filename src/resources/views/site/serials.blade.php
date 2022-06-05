@@ -1,9 +1,8 @@
 @extends('site.layouts.layer')
 @section('title')
-    Сераилы
+    Сериалы
 @endsection
 @section('main_content')
-    <div class="text-green-800 text-center text-4xl">Временная хуета</div>
     <div class="grid grid-cols-3 gap-12 m-12">
         @foreach($genres as $genre)
             <div class="flex justify-center">

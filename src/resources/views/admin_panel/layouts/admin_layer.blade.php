@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/index.min.css"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
     <title>@yield('title')</title>
 </head>
 <body>
@@ -15,7 +17,7 @@
     class="relative w-full flex flex-wrap items-center justify-between py-3 bg-gray-100 text-gray-500 hover:text-gray-700 focus:text-gray-700 shadow-lg">
     <div class="container-fluid w-full flex flex-wrap items-center justify-between px-6">
         <div class="container-fluid">
-            <a class="text-xl text-black font-semibold hover:text-blue-700" href="{{route('films.site')}}">На сайт</a>
+            <a class="text-xl text-black font-semibold hover:text-blue-700" href="{{route('films.content.site')}}">На сайт</a>
         </div>
         <div class="container-fluid">
 

@@ -55,6 +55,6 @@ class User extends Authenticatable
 
     public function films()
     {
-        return $this->belongsToMany(Film::class);
+        return $this->belongsToMany(Film::class)->using(FilmUser::class);
     }
 }

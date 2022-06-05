@@ -2,13 +2,13 @@
 @section('title', 'Добавление фильма')
 @section('working_place')
 
-    <div class="block p-6 rounded-lg shadow-lg bg-white max-w-full h-screen">
+    <div class="block p-6 rounded-lg shadow-lg bg-white max-w-full h-full">
         <form action="{{route('admin.films.store')}}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group mb-6">
                 <input type="text" name="name" list="film"
                        class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300  rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                       id="name" placeholder="Название фильма">
+                       id="name" placeholder="Название фильма" onkeydown="return event.key != 'Enter';">
                 <datalist id="film">
 
                 </datalist>
@@ -19,7 +19,6 @@
                 @error('name')
                 <div class="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">{{ $message }}</div>
                 @enderror
-                <ul class="films"></ul>
             </div>
             <div class="form-group mb-6">
                 <input type="text" name="film_path"
@@ -49,6 +48,9 @@
                 <textarea name="description"
                 class="form-control block w-full px-3 py-1.5 ext-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                 id="description" rows="3" placeholder="Описание фильма"></textarea>
+                @error('description')
+                <div class="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">{{ $message }}</div>
+                @enderror
             </div>
             <div class="form-group mb-6">
                 <select name="standart_id"

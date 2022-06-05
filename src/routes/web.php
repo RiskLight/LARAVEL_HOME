@@ -4,6 +4,7 @@ use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\FilmsController;
 use App\Http\Controllers\GenresController;
+use App\Http\Controllers\RateController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -57,7 +58,7 @@ Route::group([
     ], function () {
         Route::get('/', [CommentsController::class, 'index'])->name('index');
         Route::put('/comments/{comment}', [CommentsController::class, 'update'])->name('publish');
-        Route::delete('/comments/destroy/{comment}', [CommentsController::class, 'destroy'])->name('destroy');
+        Route::delete('/destroy/{comment}', [CommentsController::class, 'destroy'])->name('destroy');
     });
 });
 
@@ -65,8 +66,16 @@ Route::group([
     'as' => 'films.',
     'prefix' => 'films'
 ], function () {
-    Route::get('/{standartId?}/{genreId?}', [FilmsController::class, 'index'])->name('site');
-    Route::get('/{film}/show/film', [FilmsController::class, 'show'])->name('show');
+//    Route::get('/{standartId?}/{genreId?}', [FilmsController::class, 'index'])->name('site');
+//    Route::get('/{film}/show/film', [FilmsController::class, 'show'])->name('show');
+
+    Route::group([
+        'as' => 'content.',
+        'prefix' => 'content'
+    ], function () {
+        Route::get('/{standartId?}/{genreId?}', [FilmsController::class, 'index'])->name('site');
+        Route::get('/{film}/show/film', [FilmsController::class, 'show'])->name('show');
+    });
 
     Route::group([
         'as' => 'comments.',
@@ -74,6 +83,24 @@ Route::group([
     ], function () {
         Route::post('/', [CommentsController::class, 'store'])->name('store');
     });
+
+    Route::group([
+        'as' => 'favorite.',
+        'prefix' => 'favorite'
+    ], function () {
+        Route::get('/my-films', [FavoriteController::class, 'index'])->name('index');
+        Route::post('/', [FavoriteController::class, 'store'])->name('store');
+        Route::delete('/destroy/{film}', [FavoriteController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::group([
+        'as' => 'rate.',
+        'prefix' => 'rate'
+    ], function () {
+        Route::post('/', [RateController::class, 'store'])->name('store');
+//        Route::get('/get/{film}', [RateController::class, 'show'])->name('show');
+    });
+
 });
 
 
@@ -84,20 +111,22 @@ Route::group([
     Route::get('/', [GenresController::class, 'index'])->name('genres');
 });
 
-Route::group([
-    'as' => 'favorites.',
-    'prefix' => 'favorites'
-], function () {
-    Route::get('/favorite', [FavoriteController::class, 'index'])->name('favorite');
-});
 
-Route::group([
-    'as' => 'comments.',
-    'prefix' => 'comments'
-], function () {
-    Route::post('/', [CommentsController::class, 'store'])->name('store');
-    Route::get('/{film}', [CommentsController::class, 'show'])->name('show');
-});
+
+//Route::group([
+//    'as' => 'favorites.',
+//    'prefix' => 'favorites'
+//], function () {
+//    Route::get('/favorite', [FavoriteController::class, 'index'])->name('favorite');
+//});
+
+//Route::group([
+//    'as' => 'comments.',
+//    'prefix' => 'comments'
+//], function () {
+//    Route::post('/', [CommentsController::class, 'store'])->name('store');
+//    Route::get('/{film}', [CommentsController::class, 'show'])->name('show');
+//});
 
 Auth::routes();
 

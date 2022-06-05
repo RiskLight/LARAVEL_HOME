@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Rate extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['points', 'film_id', 'user_id'];
+
     public function films()
     {
         return $this->belongsToMany(Film::class);

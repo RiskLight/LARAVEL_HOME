@@ -2,10 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Film;
+use App\Models\FilmUser;
+use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 
 class FavoriteController extends Controller
 {
@@ -16,13 +23,17 @@ class FavoriteController extends Controller
      */
     public function index()
     {
-        return view('site.favorite');
+        $films = Film::whereHas('users', function (Builder $query) {
+            $query->where('user_id', auth()->user()->id);
+        })->paginate(18);
+
+       return view('site.favorite', ['films' => $films]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -32,19 +43,22 @@ class FavoriteController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return RedirectResponse
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->except('_token');
+        $data['user_id'] = auth()->user()->id;
+        FilmUser::create($data);
+        return redirect()->route('films.favorite.index');
     }
 
     /**
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show($id)
     {
@@ -55,7 +69,7 @@ class FavoriteController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function edit($id)
     {
@@ -65,9 +79,9 @@ class FavoriteController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(Request $request, $id)
     {
@@ -78,10 +92,18 @@ class FavoriteController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
     public function destroy($id)
     {
-        //
+//        $film = DB::table('film_user')
+//            ->where('film_id', $id)
+//            ->take(1);
+//
+//        $film->delete();
+        FilmUser::where('film_id', $id)->where('user_id', auth()->user()->id)->delete();
+//        dd($film);
+//        $film->delete();
+        return redirect()->route('films.favorite.index');
     }
 }

@@ -8,41 +8,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/index.min.css"/>
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('cols.css') }}" rel="stylesheet">
     <title>@yield('title')</title>
-    <style>
-        div.stars {
-            width: 500px;
-            display: flex;
-        }
-        input.star { display: none; }
-        label.star {
-            float: right;
-            padding: 10px;
-            font-size: 52px;
-            color: #444;
-            transition: all .2s;
-        }
-        input.star:checked ~ label.star:before {
-            content: '\f005';
-            color: #FD4;
-            transition: all .25s;
-        }
-        input.star-10:checked ~ label.star:before {
-            color: #FE7;
-            text-shadow: 0 0 20px #952;
-        }
-        input.star-1:checked ~ label.star:before { color: #F62; }
-        label.star:hover { transform: rotate(-15deg) scale(1.3); }
-        label.star:before {
-            content: '\f006';
-            font-family: FontAwesome, serif;
-        }
-
-        .class {
-            display: flex;
-            flex-direction: row-reverse;
-        }
-    </style>
 </head>
 <body>
 <header>
@@ -66,15 +34,15 @@
                 <ul class="navbar-nav flex flex-col pl-0 list-style-none mr-auto">
                     <li class="nav-item p-2">
                         <a class="nav-link text-white hover:text-blue-700 focus:text-gray-600 p-0"
-                           href="{{route('films.site')}}">Все фильмы</a>
+                           href="{{route('films.content.site')}}">Все фильмы</a>
                     </li>
                     <li class="nav-item p-2">
                         <a class="nav-link text-white hover:text-blue-700 focus:text-gray-600 p-0"
-                           href="{{route('films.site', ['standartId' => 2])}}">Фильмы</a>
+                           href="{{route('films.content.site', ['standartId' => 2])}}">Фильмы</a>
                     </li>
                     <li class="nav-item p-2">
                         <a class="nav-link text-white hover:text-blue-700 focus:text-gray-600 p-0"
-                           href="{{route('films.site',  ['standartId' => 1])}}">Сериалы</a>
+                           href="{{route('films.content.site',  ['standartId' => 1])}}">Сериалы</a>
                     </li>
                     <li class="nav-item p-2">
                         <a class="nav-link text-white hover:text-blue-700 focus:text-gray-600 p-0"
@@ -101,7 +69,7 @@
                     @if (auth()->user()->role_id === 2)
                         <div>
                             <a class="flex items-center hidden-arrow hover:text-blue-700"
-                               href="{{route('favorites.favorite')}}">
+                               href="{{route('films.favorite.index')}}">
                                 Избранное
                             </a>
                         </div>
@@ -129,7 +97,7 @@
     </nav>
 </header>
 @yield('main_content')
-<footer class="text-center bg-gray-900 text-white">
+<footer class="text-center bg-gray-900 text-white ">
     <div class="container px-6 pt-6" style="max-width: 1440px; margin: 0 auto">
         <div class="flex justify-center mb-6">
             <a href="#" type="button"

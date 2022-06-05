@@ -13,7 +13,7 @@ class Comment extends Model
     protected $fillable = ['description', 'user_id', 'film_id'];
 
 
-    public function films()
+    public function film()
     {
         return $this->belongsTo(Film::class);
     }

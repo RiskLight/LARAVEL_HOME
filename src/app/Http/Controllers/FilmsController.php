@@ -25,15 +25,15 @@ class FilmsController extends Controller
     public function index($standartId = null, $genreId = null)
     {
         if ($standartId && $standartId !== 'all') {
-            $films = Film::where('standart_id', $standartId)->paginate(2);
+            $films = Film::where('standart_id', $standartId)->paginate(18);
         } else {
-            $films = Film::paginate(2);
+            $films = Film::paginate(18);
         }
 
         if ($genreId) {
             $films = Film::whereHas('genres', function ($query) use ($genreId) {
                 $query->where('genres.id', $genreId);
-            })->paginate(2);
+            })->paginate(18);
         }
         return view('site.main', ['films' => $films]);
 
@@ -41,9 +41,10 @@ class FilmsController extends Controller
 
     public function adminIndex()
     {
-        $films = Film::paginate(2);
+        $films = Film::paginate(10);
         return view('admin_panel.films', ['films' => $films]);
     }
+
 
 
     /**
@@ -139,6 +140,7 @@ class FilmsController extends Controller
      */
     public function destroy($id)
     {
+
         $film = Film::find($id);
         $film->delete();
         return redirect()->route('admin.films.index');

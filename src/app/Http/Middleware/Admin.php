@@ -23,7 +23,7 @@ class Admin
             return $next($request);
         }
         if (Auth::user() && Auth::user()->role_id === 2) {
-            return redirect()->route('films.site');
+            return redirect()->route('films.content.site');
         }
         return redirect()->route('login');
     }

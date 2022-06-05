@@ -10,16 +10,16 @@ const year = document.querySelector('#year');
 
 const type = document.querySelector('#standart_id');
 
-inputTitle.oninput = function () {
-        getFilms();
+
+inputTitle.onchange = function () {
+    getFilms();
 }
 
 
-// inputTitle.onchange = function () {
-//     getFilms();
-// }
-
 function getFilms () {
+    while (filmTitle.firstChild) {
+        filmTitle.firstChild.remove()
+    }
     const finalUrl = apiURL + inputTitle.value;
     if (inputTitle.value !== '' && inputTitle.value.length > 5) {
         fetch(finalUrl)
@@ -41,3 +41,5 @@ function getFilms () {
             })
     }
 }
+
+

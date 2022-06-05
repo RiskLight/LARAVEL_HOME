@@ -3,15 +3,15 @@
 @section('links')
     <li class="nav-item p-2">
         <a class="nav-link text-white hover:text-blue-700 focus:text-gray-600 p-0"
-           href="{{route('films.site')}}">Все фильмы</a>
+           href="{{route('films.content.site')}}">Все фильмы</a>
     </li>
     <li class="nav-item p-2">
         <a class="nav-link text-white hover:text-blue-700 focus:text-gray-600 p-0"
-           href="{{route('films.site')}}">Фильмы</a>
+           href="{{route('films.content.site')}}">Фильмы</a>
     </li>
     <li class="nav-item p-2">
         <a class="nav-link text-white hover:text-blue-700 focus:text-gray-600 p-0"
-           href="{{route('films.site')}}">Сериалы</a>
+           href="{{route('films.content.site')}}">Сериалы</a>
     </li>
     <li class="nav-item p-2">
         <a class="nav-link text-white hover:text-blue-700 focus:text-gray-600 p-0"
@@ -23,7 +23,7 @@
         @foreach($genres as $genre)
         <div class="flex justify-center">
             <div class="rounded-lg shadow-lg bg-white max-w-sm">
-                <a href="{{route('films.site', ['standartId' => 'all', 'genreId'=>$genre->id])}}">
+                <a href="{{route('films.content.site', ['standartId' => 'all', 'genreId'=>$genre->id])}}">
                     <img class="rounded-t-lg" src="{{$genre->img_path}}" alt=""/>
                 </a>
                 <div class="p-6">
