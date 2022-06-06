@@ -98,7 +98,7 @@ Route::group([
         'prefix' => 'rate'
     ], function () {
         Route::post('/', [RateController::class, 'store'])->name('store');
-//        Route::get('/get/{film}', [RateController::class, 'show'])->name('show');
+        Route::get('/get/{film}', [RateController::class, 'show'])->name('show');
     });
 
 });

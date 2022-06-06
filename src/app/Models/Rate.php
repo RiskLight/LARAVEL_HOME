@@ -9,7 +9,8 @@ class Rate extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['points', 'film_id', 'user_id'];
+    protected $table = 'rate';
+    protected $fillable = ['points', 'votes', 'film_id', 'user_id'];
 
     public function films()
     {

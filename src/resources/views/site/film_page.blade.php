@@ -35,6 +35,8 @@
         </div>
         <div class="stars">
             <form action="{{route('films.rate.store')}}" class="class">
+                <input type="hidden" name="get-rate" content="{{route('films.rate.show', $film->id)}}">
+                <input type="hidden" name="csrf-token" content="{{ csrf_token() }}">
                 <input type="hidden" class="hide" name="film_id" id="{{$film->id}}" data-set-value="{{$film->id}}">
                 <input class="star star-10" id="star-10" type="radio" data-item-value="10" name="star"/>
                 <label class="star star-10" for="star-10"></label>
@@ -183,7 +185,8 @@
             </div>
         </div>
     </div>
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
+@section('script')
     <script src="{{asset('fetch.js')}}"></script>
 @endsection
 

@@ -10,12 +10,7 @@
                        class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300  rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                        id="name" placeholder="Название фильма" onkeydown="return event.key != 'Enter';">
                 <datalist id="film">
-
                 </datalist>
-{{--                <button type="button" id="check"--}}
-{{--                        class="w-full px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">--}}
-{{--                    Проверить фильм--}}
-{{--                </button>--}}
                 @error('name')
                 <div class="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">{{ $message }}</div>
                 @enderror
@@ -109,4 +104,7 @@
             </button>
         </form>
     </div>
+@endsection
+@section('script_admin')
+    <script src = {{asset('api_file.js')}}></script>
 @endsection

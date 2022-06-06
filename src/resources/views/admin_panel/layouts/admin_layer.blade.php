@@ -58,7 +58,6 @@
     </div>
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>
-<script src = {{asset('api_file.js')}}></script>
-{{--<script src = {{asset('js/axios_test.js')}}></script>--}}
+@yield('script_admin')
 </body>
 </html>

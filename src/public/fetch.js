@@ -1,14 +1,12 @@
+// POST Request
+const inputAll = document.querySelectorAll('.class input');
 
-let inputAll = document.querySelectorAll('.class input')
+const token = document.querySelector('input[name="csrf-token"]').getAttribute('content');
 
-let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
-let url = document.querySelector('.class').getAttribute('action');
-
-
+const url = document.querySelector('.class').getAttribute('action');
 
 inputAll.forEach(input => input.addEventListener('click', function () {
-    let value = this.dataset.itemValue;
+    let points = this.dataset.itemValue;
     let filmId = document.querySelector('.hide').getAttribute('data-set-value');
     fetch(url, {
         headers: {
@@ -20,7 +18,8 @@ inputAll.forEach(input => input.addEventListener('click', function () {
         method: 'POST',
         credentials: "same-origin",
         body: JSON.stringify({
-            points: value,
+            points: points,
+            votes: points,
             film_id: filmId
         })
     })
@@ -34,3 +33,13 @@ inputAll.forEach(input => input.addEventListener('click', function () {
             console.log(error);
         });
 }))
+
+//GET Request
+const urlGetMethod = document.querySelector('input[name="get-rate"]').getAttribute('content');
+
+fetch(urlGetMethod)
+    .then( response => response.json() )
+    .then( response => {
+        // Do something with response.
+    } );
+
