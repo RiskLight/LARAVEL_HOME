@@ -13,10 +13,9 @@ class CreateRateTable extends Migration
      */
     public function up()
     {
-        Schema::create('rate', function (Blueprint $table) {
+        Schema::create('rates', function (Blueprint $table) {
             $table->id();
             $table->integer('points');
-            $table->integer('votes');
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('film_id')->constrained('films')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
@@ -30,6 +29,6 @@ class CreateRateTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rate');
+        Schema::dropIfExists('rates');
     }
 }

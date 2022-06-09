@@ -1,9 +1,7 @@
 @extends('admin_panel.layouts.admin_layer')
-@section('title')
-    Комментарии
-@endsection
+@section('title', 'Комментарии')
 @section('working_place')
-    <div class="max-w-full">
+    <div class="max-w-full h-screen">
         <div class="grid lg:grid-cols-6 m-12">
             @foreach($comments as $comment)
                 <div class="border-2 p-6">
@@ -24,16 +22,23 @@
                 </div>
                 <div class="p-6 border-2">
                     <!-- Button trigger modal -->
-                    <button type="button"
-                            class="inline-block mb-5 px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-                            data-bs-toggle="modal" data-bs-target="#exampleModalScrollable">
+{{--                    <button type="button"--}}
+{{--                            class="inline-block mb-5 px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"--}}
+{{--                            data-bs-toggle="modal" data-bs-target="#exampleModalScrollable">--}}
+{{--                        Редактировать--}}
+{{--                    </button>--}}
+                    <a class="cursor-pointer inline-block mb-5 px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                            data-bs-toggle="modal" data-bs-target="#exampleModalScrollable_{{$comment->id}}"
+                       data-action="{{ route('admin.comments.update', ['film' => $comment->film->id, 'comment' => $comment->id]) }}">
                         Редактировать
-                    </button>
+                    </a>
+{{--                    <a data-bs-toggle="modal" class="btn btn-warning" data-bs-target="#deleteUserModal_{{$country->id}}"--}}
+{{--                       data-action="{{ route('admin.countries.destroy', $country->id) }}"></a>--}}
 
                     <!-- Modal -->
                     <div
                         class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
-                        id="exampleModalScrollable" tabindex="-1" aria-labelledby="exampleModalScrollableLabel"
+                        id="exampleModalScrollable_{{$comment->id}}" tabindex="-1" aria-labelledby="exampleModalScrollableLabel"
                         aria-hidden="true">
                         <div class="modal-dialog modal-dialog-scrollable relative w-auto h-full pointer-events-none">
                             <div
@@ -49,7 +54,7 @@
                                             data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body relative p-4">
-                                    <form action="{{route('admin.comments.publish', ['comment' => $comment->id])}}"
+                                    <form action="{{route('admin.comments.update', ['film' => $comment->film->id, 'comment' => $comment->id])}}"
                                           method="POST">
                                         @csrf
                                         @method('PUT')
@@ -93,4 +98,13 @@
             {{ $comments->links() }}
         </div>
     </div>
+@endsection
+@section('script_admin')
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+<script src="{{asset('modal.js')}}">
+    // $(document).on('click','.delete',function(){
+    //     let id = $(this).attr('data-id');
+    //     $('#id').val(id);
+    // });
+</script>
 @endsection

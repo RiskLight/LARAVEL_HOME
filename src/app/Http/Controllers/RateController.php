@@ -39,13 +39,10 @@ class RateController extends Controller
      */
     public function store(Request $request)
     {
-//        $points = $request->get('points');
         $data['points'] = $request->get('points');
-        $data['votes'] = $request->get('votes');
         $data['film_id'] = $request->get('film_id');
         $data['user_id'] = auth()->user()->id;
         Rate::create($data);
-//        dd($points);
     }
 
     /**
@@ -56,13 +53,9 @@ class RateController extends Controller
      */
     public function show($id)
     {
-//        $rate = Rate::whereHas('films', function (Builder $query) use ($id) {
-//            $query->where('film_id', $id);
-//        })->avg('points')->get();
 
-        $rate = Rate::where('film_id', $id)->avg('votes');
+        $rate = Rate::where('film_id', $id)->avg('points');
         $exactRating = round($rate, 2);
-        $approximateRating = round($rate);
 
         return response()->json($exactRating);
     }

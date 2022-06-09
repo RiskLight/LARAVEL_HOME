@@ -19,7 +19,7 @@ class CreateFilmsTable extends Migration
             $table->string('film_path');
             $table->string('img_path');
             $table->text('description');
-            $table->integer('year');
+            $table->string('year');
             $table->foreignId('standart_id')->constrained('standarts')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });

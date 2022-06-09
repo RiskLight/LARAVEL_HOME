@@ -1,8 +1,8 @@
 @extends('site.layouts.layer')
 @section('title', 'Избранное')
 @section('main_content')
-    <div class="h-full">
-        <div class="grid xl:grid-cols-6 gap-12 m-12 m">
+    <div class="h-full h-screen">
+        <div class="grid xl:grid-cols-6 gap-12 m-12">
             @foreach($films as $film)
                 <div class="flex justify-center sm:px-6">
                     <div class="rounded-lg shadow-lg bg-white max-w-sm">

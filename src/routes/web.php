@@ -57,7 +57,7 @@ Route::group([
         'prefix' => 'comments'
     ], function () {
         Route::get('/', [CommentsController::class, 'index'])->name('index');
-        Route::put('/comments/{comment}', [CommentsController::class, 'update'])->name('publish');
+        Route::put('{film}/comments/{comment}', [CommentsController::class, 'update'])->name('update');
         Route::delete('/destroy/{comment}', [CommentsController::class, 'destroy'])->name('destroy');
     });
 });
@@ -82,7 +82,15 @@ Route::group([
         'prefix' => '{film}/comments'
     ], function () {
         Route::post('/', [CommentsController::class, 'store'])->name('store');
+        Route::put('/{comment}', [CommentsController::class, 'update'])->name('update');
     });
+
+//    Route::group([
+//        'as' => 'comment.',
+//        'prefix' => 'comment'
+//    ], function () {
+//        Route::put('/{comment}', [CommentsController::class, 'update'])->name('update');
+//    });
 
     Route::group([
         'as' => 'favorite.',

@@ -68,15 +68,6 @@ class FilmsController extends Controller
      */
     public function store(FilmRequest $request)
     {
-//        $film = Film::create([
-//            'name' => $request->name,
-//            'film_path' => $request->film_path,
-//            'img_path' => $request->file('img_path')->store('images'),
-//            'description' => $request->description,
-//            'year' => $request->year,
-//            'standart_id' => $request->standart,
-//
-//        ]);
         $data = $request->except('_token', 'genres');
         $data['img_path'] = $request->file('img_path')->store('images');
 

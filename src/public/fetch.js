@@ -19,7 +19,6 @@ inputAll.forEach(input => input.addEventListener('click', function () {
         credentials: "same-origin",
         body: JSON.stringify({
             points: points,
-            votes: points,
             film_id: filmId
         })
     })
@@ -38,8 +37,9 @@ inputAll.forEach(input => input.addEventListener('click', function () {
 const urlGetMethod = document.querySelector('input[name="get-rate"]').getAttribute('content');
 
 fetch(urlGetMethod)
-    .then( response => response.json() )
-    .then( response => {
-        // Do something with response.
-    } );
-
+    .then((response) => {
+        return response.json();
+    })
+    .then((data) => {
+        let huy = data;
+    });

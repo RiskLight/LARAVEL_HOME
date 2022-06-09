@@ -81,12 +81,16 @@ class CommentsController extends Controller
      * @param  int  $id
      * @return RedirectResponse
      */
-    public function update(CommentRequest $request, $id)
+    public function update(CommentRequest $request, $film, $id)
     {
         $data = $request->except('_token', '_method');
+
         $comment = Comment::find($id);
         $comment->update($data);
-        return redirect()->route('admin.comments.index');
+        if (auth()->user()->role_id === 1) {
+            return redirect()->route('admin.comments.index');
+        }
+        return redirect()->route('films.content.show', $film);
     }
 
     /**
