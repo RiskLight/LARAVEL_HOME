@@ -15,7 +15,7 @@
 <body>
 <header>
     <nav
-        class="relative w-full flex flex-wrap items-center justify-between py-3 bg-gray-900 text-gray-200 shadow-lg navbar navbar-expand-lg navbar-light">
+        class="relative w-full flex flex-wrap items-center justify-evenly py-3 bg-gray-900 text-gray-200 shadow-lg navbar navbar-expand-lg navbar-light">
         <div class="container-fluid w-full flex flex-wrap items-center justify-between px-6">
             <button
                 class="navbar-toggler text-gray-200 border-0 hover:shadow-none hover:no-underline py-2 px-2.5 bg-transparent focus:outline-none focus:ring-0 focus:shadow-none focus:no-underline"
@@ -27,10 +27,9 @@
                           d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"></path>
                 </svg>
             </button>
-            <div class="collapse navbar-collapse flex-grow items-center" id="navbarSupportedContent1">
+            <div class="collapse navbar-collapse items-center" id="navbarSupportedContent1">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/d/db/Zeronet_logo.png" alt="logo" width="32"
                      height="32">
-                <!-- Left links -->
                 <ul class="navbar-nav flex flex-col pl-0 list-style-none mr-auto">
                     <li class="nav-item p-2">
                         <a class="nav-link text-white hover:text-blue-700 focus:text-gray-600 p-0"
@@ -49,52 +48,72 @@
                            href="{{route('genres.genres')}}">По жанрам</a>
                     </li>
                 </ul>
-                <!-- Left links -->
             </div>
-            <div class="dropdown relative flex justify-between px-6 w-56">
-                @guest
-                    <div>
-                        <a class="dropdown-toggle flex items-center hidden-arrow hover:text-blue-700"
-                           href="{{route('login')}}">
-                            Вход
-                        </a>
-                    </div>
-                    <div>
-                        <a class="dropdown-toggle flex items-center hidden-arrow hover:text-blue-700"
-                           href="{{route('register')}}">
-                            Регистрация
-                        </a>
-                    </div>
-                @else
-                    @if (auth()->user()->role_id === 2)
-                        <div>
-                            <a class="flex items-center hidden-arrow hover:text-blue-700"
-                               href="{{route('films.favorite.index')}}">
-                                Избранное
+            <div class="flex-grow max-w-xs w-full">
+                <form action="{{route('films.search')}}" method="GET">
+                    <input type="search"
+                           class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300
+                        rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none "
+                           id="exampleSearch" name="search" placeholder="Введите название"/>
+                </form>
+            </div>
+            <div class="collapse navbar-collapse items-center" id="navbarSupportedContent1">
+                <ul class="navbar-nav flex flex-col pl-0 list-style-none mr-auto">
+                    @guest
+                        <li class="nav-item p-2">
+                            <a class="dropdown-toggle flex items-center hidden-arrow hover:text-blue-700"
+                               href="{{route('login')}}">
+                                Вход
                             </a>
-                        </div>
+                        </li>
+                        <li class="nav-item p-2">
+                            <a class="dropdown-toggle flex items-center hidden-arrow hover:text-blue-700"
+                               href="{{route('register')}}">
+                                Регистрация
+                            </a>
+                        </li>
                     @else
-                        <div>
-                            <a class="flex items-center hidden-arrow hover:text-blue-700" href="{{route('admin.films.index')}}">
-                                Админка
-                            </a>
-                        </div>
-                    @endif
-                    <div>
-                        <a class="dropdown-toggle flex items-center hidden-arrow hover:text-blue-700"
-                           href="{{ route('logout') }}"
-                           onclick="event.preventDefault();
+                        @if (auth()->user()->role_id === 2)
+                            <li class="nav-item p-2">
+                                <a class="flex items-center hidden-arrow hover:text-blue-700"
+                                   href="{{route('films.favorite.index')}}">
+                                    Избранное
+                                </a>
+                            </li>
+                        @else
+                            <li class="nav-item p-2">
+                                <a class="flex items-center hidden-arrow hover:text-blue-700"
+                                   href="{{route('admin.films.index')}}">
+                                    Админка
+                                </a>
+                            </li>
+                        @endif
+                        <li class="nav-item p-2">
+                            <a class="dropdown-toggle flex items-center hidden-arrow hover:text-blue-700"
+                               href="{{ route('logout') }}"
+                               onclick="event.preventDefault();
                            document.getElementById('logout-form').submit();">
-                            Выйти
-                        </a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
-                    </div>
-                @endguest
+                                Выйти
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </li>
+                    @endguest
+                </ul>
             </div>
         </div>
     </nav>
+    {{--    <div class="flex w-3/4 mx-auto mt-1 justify-center">--}}
+    {{--        <div class="w-full">--}}
+    {{--            <form action="{{route('films.search')}}" method="GET">--}}
+    {{--            <input type="search"--}}
+    {{--                   class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300--}}
+    {{--                        rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none "--}}
+    {{--                   id="exampleSearch" name="search" placeholder="Введите название"/>--}}
+    {{--            </form>--}}
+    {{--        </div>--}}
+    {{--    </div>--}}
 </header>
 @yield('main_content')
 <footer class="text-center bg-gray-900 text-white ">

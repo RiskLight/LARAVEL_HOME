@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\View\Components\Base;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -14,7 +16,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        Blade::component('emails.base', Base::class);
+
     }
 
     /**

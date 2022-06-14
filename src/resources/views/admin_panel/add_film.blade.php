@@ -1,8 +1,12 @@
 @extends('admin_panel.layouts.admin_layer')
 @section('title', 'Добавление фильма')
 @section('working_place')
-
     <div class="block p-6 rounded-lg shadow-lg bg-white max-w-full h-full">
+        @if(session()->has('message'))
+            <div class="bg-green-100 rounded-md p-3 flex mb-3 text-sm text-green-800">
+                {{ session()->get('message') }}
+            </div>
+        @endif
         <form action="{{route('admin.films.store')}}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group mb-6">

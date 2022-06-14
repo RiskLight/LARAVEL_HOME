@@ -30,6 +30,7 @@
         </div>
     </div>
 </nav>
+@yield('search')
 <div>
     <div>
         <div class="flex items-center justify-center">

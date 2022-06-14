@@ -19,12 +19,12 @@
         <iframe src="{{$film->film_path}}" width="1020" height="600"
                 frameborder="0" allowfullscreen></iframe>
     </div>
-    <div class="flex justify-between max-w-3xl mx-auto">
+    <div class="flex flex-wrap align-baseline justify-evenly w-3/4 mx-auto">
         <div>
             <form class="w-full bg-white rounded-lg px-4 pt-2" method="POST"
                   action="{{route('films.favorite.store')}}">
                 @csrf
-                <div class="-mr-1">
+                <div class="">
                     <input type="hidden" name="film_id" value="{{$film->id}}">
                     <button type='submit'
                             class="bg-white text-gray-700 font-medium py-1 px-4 border border-gray-400 rounded-lg tracking-wide mr-1 hover:bg-gray-100">
@@ -33,7 +33,7 @@
                 </div>
             </form>
         </div>
-        <div class="stars">
+        <div class="stars mr-2">
             <form action="{{route('films.rate.store')}}" class="class">
                 <input type="hidden" name="get-rate" content="{{route('films.rate.show', $film->id)}}">
                 <input type="hidden" name="csrf-token" content="{{ csrf_token() }}">
@@ -60,14 +60,18 @@
                 <label class="star star-1" for="star-1"></label>
             </form>
         </div>
+        <div class="mx-8">
+            Оценка:
+            <span id="exact-rating" class="mt-2 text-3xl"></span>
+        </div>
     </div>
-    <div class="text-2xl w-3/4 mr-auto ml-auto mt-20 flex justify-around">
+    <div class="text-2xl w-3/4 mx-auto mt-20 flex justify-around">
         <div>{{$film->description}}</div>
     </div>
     @guest
         <div
-            class="flex bg-blue-100 mt-20 pt-12 pb-12 mx-auto items-center justify-center shadow-lg mt-56 mx-8 mb-4 w-3/4 text-3xl text-center">
-            Комментарии могут оставлять только зарегистрированные пользователи
+            class="bg-blue-300 w-1/2 lg:w-1/2 mx-auto mt-12 mb-12 h-20 flex items-center justify-center flex-wrap ">
+            <p class="text-lg text-green-800">Комментарии могут оставлять только зарегистрированные пользователи</p>
         </div>
     @else
         <!-- comment form -->
@@ -109,87 +113,84 @@
         </div>
     @endguest
     @if(isset($film->comments))
-    @foreach($film->comments as $comment)
-        <div class="w-3/4 mx-auto">
-            <div class="flex-col mt-6 mx-auto items-center justify-start shadow-lg mt-56 mx-8 mb-1 w-full">
-                <div class="p-6 flex flex-col justify-start">
-                    <span class="text-gray-900 text-xl font-medium mb-2">{{$comment->user->name}}</span>
-                    <div class="break-words">
-                        <p class="text-gray-700 text-base text-lg max-w-full mb-4">
-                            {{$comment->description}}
-                        </p>
-                    </div>
-                    <p class="text-gray-600 text-sm">{{$comment->dateAsCarbon->diffForHumans()}}</p>
-                </div>
-                @guest
-                    <div></div>
-                @else
-                    @if ($comment->user_id === auth()->user()->id)
-                        <div class="justify-end">
-                            <!-- Button trigger modal -->
-{{--                            <button type="button"--}}
-{{--                                    class="inline-block px-6 py-2.5 bg-transparent text-gray-600 underline hover:no-underline text-sm leading-tight rounded focus:shadow-lg focus:outline-none focus:ring-0  transition duration-150 ease-in-out outline-none"--}}
-{{--                                    data-bs-toggle="modal" data-bs-target="#staticBackdrop">--}}
-{{--                                Редактировать--}}
-{{--                            </button>--}}
-                            <a class="cursor-pointer inline-block px-6 py-2.5 bg-transparent text-gray-600 underline hover:no-underline text-sm leading-tight rounded focus:shadow-lg focus:outline-none focus:ring-0  transition duration-150 ease-in-out outline-none"
-                                    data-bs-toggle="modal" data-bs-target="#staticBackdrop_{{$comment->id}}"
-                               data-action="{{ route('admin.comments.update', ['film' => $comment->film->id, 'comment' => $comment->id]) }}"
-                            >
-                                Редактировать
-                            </a>
+        @foreach($film->comments as $comment)
+            <div class="w-3/4 mx-auto">
+                <div class="flex-col mt-6 mx-auto items-center justify-start shadow-lg mt-56 mx-8 mb-1 w-full">
+                    <div class="p-6 flex flex-col justify-start">
+                        <span class="text-gray-900 text-xl font-medium mb-2">{{$comment->user->name}}</span>
+                        <div class="break-words">
+                            <p class="text-gray-700 text-base text-lg max-w-full mb-4">
+                                {{$comment->description}}
+                            </p>
                         </div>
-                        <!-- Modal -->
-                        <div
-                            class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
-                            id="staticBackdrop_{{$comment->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-                            aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                            <div class="modal-dialog relative w-auto pointer-events-none">
-                                <div
-                                    class="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
+                        <p class="text-gray-600 text-sm">{{$comment->dateAsCarbon->diffForHumans()}}</p>
+                    </div>
+                    @guest
+                        <div></div>
+                    @else
+                        @if ($comment->user_id === auth()->user()->id)
+                            <div class="justify-end">
+                                <a class="cursor-pointer inline-block px-6 py-2.5 bg-transparent text-gray-600 underline hover:no-underline text-sm leading-tight rounded focus:shadow-lg focus:outline-none focus:ring-0  transition duration-150 ease-in-out outline-none"
+                                   data-bs-toggle="modal" data-bs-target="#staticBackdrop_{{$comment->id}}"
+                                   data-action="{{ route('admin.comments.update', ['film' => $comment->film->id, 'comment' => $comment->id]) }}"
+                                >
+                                    Редактировать
+                                </a>
+                            </div>
+                            <!-- Modal -->
+                            <div
+                                class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
+                                id="staticBackdrop_{{$comment->id}}" data-bs-backdrop="static" data-bs-keyboard="false"
+                                tabindex="-1"
+                                aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog relative w-auto pointer-events-none">
                                     <div
-                                        class="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
-                                        <h5 class="text-xl font-medium leading-normal text-gray-800"
-                                            id="exampleModalLabel">
-                                            Modal title
-                                        </h5>
-                                        <button type="button"
-                                                class="btn-close box-content w-4 h-4 p-1 text-black border-none rounded-none opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-black hover:opacity-75 hover:no-underline"
-                                                data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body relative p-4">
-                                        <form action="{{route('films.comments.update', ['film' => $film->id, 'comment' => $comment->id])}}"
-                                              method="POST">
-                                            @csrf
-                                            @method('PUT')
-                                            <div class="flex justify-center">
-                                                <div class="mb-3 xl:w-96">
+                                        class="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
+                                        <div
+                                            class="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
+                                            <h5 class="text-xl font-medium leading-normal text-gray-800"
+                                                id="exampleModalLabel">
+                                                Modal title
+                                            </h5>
+                                            <button type="button"
+                                                    class="btn-close box-content w-4 h-4 p-1 text-black border-none rounded-none opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-black hover:opacity-75 hover:no-underline"
+                                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body relative p-4">
+                                            <form
+                                                action="{{route('films.comments.update', ['film' => $film->id, 'comment' => $comment->id])}}"
+                                                method="POST">
+                                                @csrf
+                                                @method('PUT')
+                                                <div class="flex justify-center">
+                                                    <div class="mb-3 xl:w-96">
                                                     <textarea name="description"
-                                          class="form-control block w-full h-56 px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                          id="description" rows="3">{{$comment->description}}</textarea>
+                                                              class="form-control block w-full h-56 px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                                              id="description"
+                                                              rows="3">{{$comment->description}}</textarea>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div
-                                                class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
-                                                <button type="button"
-                                                        class="inline-block px-6 py-2.5 bg-purple-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out"
-                                                        data-bs-dismiss="modal">Закрыть
-                                                </button>
-                                                <button type="submit"
-                                                        class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out ml-1">
-                                                    Отправить
-                                                </button>
-                                            </div>
-                                        </form>
+                                                <div
+                                                    class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
+                                                    <button type="button"
+                                                            class="inline-block px-6 py-2.5 bg-purple-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out"
+                                                            data-bs-dismiss="modal">Закрыть
+                                                    </button>
+                                                    <button type="submit"
+                                                            class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out ml-1">
+                                                        Отправить
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    @endif
-                @endguest
+                        @endif
+                    @endguest
+                </div>
             </div>
-        </div>
-    @endforeach
+        @endforeach
     @else
         <div></div>
     @endif
@@ -197,11 +198,6 @@
 @section('script')
     <script src="{{asset('fetch.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
-    <script src="{{asset('modal.js')}}">
-        // $(document).on('click','.delete',function(){
-        //     let id = $(this).attr('data-id');
-        //     $('#id').val(id);
-        // });
-    </script>
+    <script src="{{asset('modal.js')}}"></script>
 @endsection
 

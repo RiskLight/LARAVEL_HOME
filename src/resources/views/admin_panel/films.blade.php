@@ -1,5 +1,16 @@
 @extends('admin_panel.layouts.admin_layer')
-@section('title')Список фильмов
+@section('title', 'Список фильмов')
+@section('search')
+    <div class="flex w-3/4 mx-auto mt-2 mb-2 justify-center">
+        <div class="w-full">
+            <form action="{{route('admin.search')}}" method="GET">
+                <input type="search"
+                       class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300
+                        rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none "
+                       id="exampleSearch" name="search" placeholder="Введите название"/>
+            </form>
+        </div>
+    </div>
 @endsection
 @section('working_place')
     <div class="max-w-full">
@@ -36,7 +47,7 @@
             @endforeach
         </div>
         <div class="flex justify-evenly">
-            {{ $films->links() }}
+            {{ $films->appends(['search' => request()->search])->links() }}
         </div>
     </div>
 @endsection

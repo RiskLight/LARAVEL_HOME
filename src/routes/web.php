@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Auth\ActivateController;
+use App\Http\Controllers\Auth\ActivationResendController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\FilmsController;
@@ -60,14 +63,15 @@ Route::group([
         Route::put('{film}/comments/{comment}', [CommentsController::class, 'update'])->name('update');
         Route::delete('/destroy/{comment}', [CommentsController::class, 'destroy'])->name('destroy');
     });
+
+    Route::get('/search', [FilmsController::class, 'adminSearch'])->name('search');
+
 });
 
 Route::group([
     'as' => 'films.',
     'prefix' => 'films'
 ], function () {
-//    Route::get('/{standartId?}/{genreId?}', [FilmsController::class, 'index'])->name('site');
-//    Route::get('/{film}/show/film', [FilmsController::class, 'show'])->name('show');
 
     Route::group([
         'as' => 'content.',
@@ -79,22 +83,16 @@ Route::group([
 
     Route::group([
         'as' => 'comments.',
-        'prefix' => '{film}/comments'
+        'prefix' => '{film}/comments',
+
     ], function () {
         Route::post('/', [CommentsController::class, 'store'])->name('store');
         Route::put('/{comment}', [CommentsController::class, 'update'])->name('update');
     });
 
-//    Route::group([
-//        'as' => 'comment.',
-//        'prefix' => 'comment'
-//    ], function () {
-//        Route::put('/{comment}', [CommentsController::class, 'update'])->name('update');
-//    });
-
     Route::group([
         'as' => 'favorite.',
-        'prefix' => 'favorite'
+        'prefix' => 'favorite',
     ], function () {
         Route::get('/my-films', [FavoriteController::class, 'index'])->name('index');
         Route::post('/', [FavoriteController::class, 'store'])->name('store');
@@ -109,8 +107,9 @@ Route::group([
         Route::get('/get/{film}', [RateController::class, 'show'])->name('show');
     });
 
-});
+    Route::get('/search', [FilmsController::class, 'search'])->name('search');
 
+});
 
 Route::group([
     'as' => 'genres.',
@@ -119,23 +118,25 @@ Route::group([
     Route::get('/', [GenresController::class, 'index'])->name('genres');
 });
 
-
-
-//Route::group([
-//    'as' => 'favorites.',
-//    'prefix' => 'favorites'
-//], function () {
-//    Route::get('/favorite', [FavoriteController::class, 'index'])->name('favorite');
-//});
-
-//Route::group([
-//    'as' => 'comments.',
-//    'prefix' => 'comments'
-//], function () {
-//    Route::post('/', [CommentsController::class, 'store'])->name('store');
-//    Route::get('/{film}', [CommentsController::class, 'show'])->name('show');
-//});
-
 Auth::routes();
+
+
+Route::get('auth/activate', [ActivateController::class, 'activate'])->name('auth.activate');
+Route::get('auth/activate/resend', [ActivationResendController::class, 'showResendForm'])->name('auth.activate.resend');
+Route::post('auth/activate/resend', [ActivationResendController::class, 'resend']);
+
+//Route::get('/search', [FilmsController::class, 'search'])->name('search');
+//Route::group([
+//    'as' => 'auth.',
+//    'prefix' => 'auth'
+//], function () {
+//    Route::get('/activate', [ActivateController::class, 'activate'])->name('activate.resend');
+//    Route::get('/activate/resend', [ActivationResendController::class, 'showResendForm'])->name('resend');
+//    Route::post('/activate/resend', [ActivationResendController::class, 'resend'])->name('post');
+//
+//});
+
+//Route::get('auth/activate', [ActivateController::class, 'activate'])->name('auth.activate');
+//Route::get('auth/activate/resend', [ActivationResendController::class, 'showResendForm'])->name('auth.activate.resend');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

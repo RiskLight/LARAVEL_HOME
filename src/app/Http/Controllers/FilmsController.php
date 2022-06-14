@@ -46,7 +46,6 @@ class FilmsController extends Controller
     }
 
 
-
     /**
      * Show the form for creating a new resource.
      *
@@ -74,7 +73,7 @@ class FilmsController extends Controller
         $film = Film::create($data);
         $film->genres()->sync($request->genre);
 
-        return redirect()->route('admin.films.create');
+        return redirect()->route('admin.films.create')->with('message', 'Фильм успешно добавлен в базу!');
     }
 
     /**
@@ -113,10 +112,12 @@ class FilmsController extends Controller
      */
     public function update(FilmRequest $request, $id)
     {
+
         $data = $request->except('_token', '_method');
         if ($request->hasFile('img_path')) {
             $data['img_path'] = $request->file('img_path')->store('images');
         }
+
         $film = Film::find($id);
         $film->update($data);
         $film->genres()->sync($request->genre);
@@ -135,6 +136,26 @@ class FilmsController extends Controller
         $film = Film::find($id);
         $film->delete();
         return redirect()->route('admin.films.index');
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->search;
+        $films = Film::where('name', 'LIKE', "%{$search}%")
+            ->orderBy('name')
+            ->paginate(18);
+        return view('site.main', ['films' => $films]);
+    }
+
+    public function adminSearch(Request $request)
+    {
+        $search = $request->search;
+        $films = Film::where('name', 'LIKE', "%{$search}%")
+            ->orderBy('name')
+            ->paginate(18);
+
+        return view('admin_panel.films', ['films' => $films]);
+
     }
 }
 

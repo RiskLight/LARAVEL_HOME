@@ -1,6 +1,8 @@
-div.stars {
+.stars {
     width: 400px;
     display: flex;
+    justify-content: space-around;
+    align-items: baseline;
 }
 input.star {
     display: none;
@@ -33,3 +35,6 @@ label.star:before {
     flex-direction: row-reverse;
 }
 
+#exact-rating {
+    height: 30px;
+}

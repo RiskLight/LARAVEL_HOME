@@ -1,4 +1,3 @@
-{{--@extends('layouts.app')--}}
 @section('title', 'Регистрация')
 @extends('site.layouts.layer')
 @section('main_content')

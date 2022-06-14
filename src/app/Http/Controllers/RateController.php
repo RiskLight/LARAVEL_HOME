@@ -39,10 +39,10 @@ class RateController extends Controller
      */
     public function store(Request $request)
     {
-        $data['points'] = $request->get('points');
-        $data['film_id'] = $request->get('film_id');
-        $data['user_id'] = auth()->user()->id;
-        Rate::create($data);
+        Rate::updateOrCreate(
+            ['user_id' => auth()->user()->id, 'film_id' => $request->get('film_id')],
+            ['points' => $request->get('points')]
+        );
     }
 
     /**
