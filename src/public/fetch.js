@@ -33,10 +33,9 @@ inputAll.forEach(input => input.addEventListener('click', function () {
         });
 }))
 
-//GET Request
+//GET Requests
 const urlGetMethod = document.querySelector('input[name="get-rate"]').getAttribute('content');
 const urlGetMethodNew = document.querySelector('input[name="get-rate"]').getAttribute('content');
-
 
 fetch(urlGetMethod)
     .then((response) => {
@@ -45,18 +44,12 @@ fetch(urlGetMethod)
     .then((data) => {
         let rate = data;
         let roundRate = Math.round(rate)
-        console.log(rate);
-        console.log(roundRate);
-
         let element = document.querySelector('.star[data-item-value="'+roundRate+'"]');
-        console.log(element);
-
         element.setAttribute('checked', true);
-
         let span = document.querySelector('#exact-rating');
-
         span.textContent = rate;
     });
+
 
 inputAll.forEach(input => {
     input.addEventListener('click', () =>setTimeout(function () {
@@ -67,17 +60,23 @@ inputAll.forEach(input => {
             .then((data) => {
                 let rateNew = data;
                 let roundRateNew = Math.round(rateNew)
-                console.log(rateNew);
-                console.log(roundRateNew);
-
                 let element = document.querySelector('.star[data-item-value="' + roundRateNew + '"]');
-                console.log(element);
-
                 element.setAttribute('checked', true);
-
                 let span = document.querySelector('#exact-rating');
-
                 span.textContent = rateNew;
-            },);
+            });
     }, 1000));
 })
+
+function disabledInput () {
+    let id = document.querySelector('#for-rate').getAttribute('data-set');
+    if (id === 'no-auth') {
+        let inputs = document.querySelectorAll('input[type=radio]');
+        for( let i = 0; i < inputs.length; i++ ){
+            inputs[i].setAttribute('disabled', true);
+        }
+    }
+}
+
+disabledInput();
+

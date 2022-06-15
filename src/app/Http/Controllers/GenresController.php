@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\FilmServiceContract;
+use App\Contracts\GenreServiceContract;
 use App\Models\Genre;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -11,6 +13,13 @@ use Illuminate\Http\Response;
 
 class GenresController extends Controller
 {
+
+    private $service;
+
+    public function __construct(GenreServiceContract $service)
+    {
+        $this->service = $service;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -18,73 +27,7 @@ class GenresController extends Controller
      */
     public function index()
     {
-        $genres = Genre::all();
+        $genres = $this->service->index();
         return view('site.genre', ['genres' => $genres]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

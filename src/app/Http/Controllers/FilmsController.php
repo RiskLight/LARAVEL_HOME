@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\FilmServiceContract;
+use App\Filters\GenreFilter;
 use App\Http\Requests\FilmRequest;
+use App\Http\Requests\FilmUpdateRequest;
 use App\Models\Film;
 use App\Models\Genre;
 use App\Models\Standart;
@@ -17,6 +20,13 @@ use Illuminate\Support\Facades\DB;
 
 class FilmsController extends Controller
 {
+    private $service;
+
+    public function __construct(FilmServiceContract $service)
+    {
+        $this->service = $service;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -24,24 +34,21 @@ class FilmsController extends Controller
      */
     public function index($standartId = null, $genreId = null)
     {
-        if ($standartId && $standartId !== 'all') {
-            $films = Film::where('standart_id', $standartId)->paginate(18);
-        } else {
-            $films = Film::paginate(18);
-        }
+        $films = $this->service->index($standartId, $genreId);
+        $years = $films->map(function ($film){
+            return substr($film->year, 0, 4);
+        });
+        $years = $years->unique()->sort();
+        $genres = $this->service->createGenre();
 
-        if ($genreId) {
-            $films = Film::whereHas('genres', function ($query) use ($genreId) {
-                $query->where('genres.id', $genreId);
-            })->paginate(18);
-        }
-        return view('site.main', ['films' => $films]);
+        return view('site.main', ['films' => $films, 'genres' => $genres, 'years' => $years]);
 
     }
 
     public function adminIndex()
     {
-        $films = Film::paginate(10);
+        $films = $this->service->adminIndex();
+
         return view('admin_panel.films', ['films' => $films]);
     }
 
@@ -53,9 +60,10 @@ class FilmsController extends Controller
      */
     public function create()
     {
-        //
-        $standarts = Standart::all();
-        $genres = Genre::all();
+        $standarts = $this->service->createStandart();
+
+        $genres = $this->service->createGenre();
+
         return view('admin_panel.add_film', ['standarts' => $standarts, 'genres' => $genres]);
     }
 
@@ -67,11 +75,7 @@ class FilmsController extends Controller
      */
     public function store(FilmRequest $request)
     {
-        $data = $request->except('_token', 'genres');
-        $data['img_path'] = $request->file('img_path')->store('images');
-
-        $film = Film::create($data);
-        $film->genres()->sync($request->genre);
+        $this->service->store($request);
 
         return redirect()->route('admin.films.create')->with('message', 'Фильм успешно добавлен в базу!');
     }
@@ -84,7 +88,8 @@ class FilmsController extends Controller
      */
     public function show($id)
     {
-        $film = Film::find($id);
+        $film = $this->service->show($id);
+
         return view('site.film_page', ['film' => $film]);
     }
 
@@ -96,9 +101,11 @@ class FilmsController extends Controller
      */
     public function edit($id)
     {
-        $film = Film::find($id);
-        $standarts = Standart::all();
-        $genres = Genre::all();
+        $film = $this->service->show($id);
+
+        $standarts = $this->service->createStandart();
+
+        $genres = $this->service->createGenre();
 
         return view('admin_panel.edit_film', ['film' => $film, 'standarts' => $standarts, 'genres' => $genres]);
     }
@@ -106,21 +113,14 @@ class FilmsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param FilmRequest $request
+     * @param FilmUpdateRequest $request
      * @param int $id
      * @return RedirectResponse
      */
-    public function update(FilmRequest $request, $id)
+    public function update(FilmUpdateRequest $request, $id)
     {
+        $this->service->update($request, $id);
 
-        $data = $request->except('_token', '_method');
-        if ($request->hasFile('img_path')) {
-            $data['img_path'] = $request->file('img_path')->store('images');
-        }
-
-        $film = Film::find($id);
-        $film->update($data);
-        $film->genres()->sync($request->genre);
         return redirect()->route('admin.films.index');
     }
 
@@ -132,29 +132,81 @@ class FilmsController extends Controller
      */
     public function destroy($id)
     {
+        $this->service->destroy($id);
 
-        $film = Film::find($id);
-        $film->delete();
         return redirect()->route('admin.films.index');
     }
 
+    /**
+     * @param Request $request
+     * @return Application|Factory|View
+     */
     public function search(Request $request)
     {
-        $search = $request->search;
-        $films = Film::where('name', 'LIKE', "%{$search}%")
-            ->orderBy('name')
-            ->paginate(18);
-        return view('site.main', ['films' => $films]);
+        $films = $this->service->search($request);
+        $genres = $this->service->createGenre();
+
+        return view('site.main', ['films' => $films,'genres' => $genres ]);
     }
 
+    /**
+     * @param Request $request
+     * @return Application|Factory|View
+     */
     public function adminSearch(Request $request)
     {
-        $search = $request->search;
-        $films = Film::where('name', 'LIKE', "%{$search}%")
-            ->orderBy('name')
-            ->paginate(18);
+        $films = $this->service->search($request);
 
         return view('admin_panel.films', ['films' => $films]);
+    }
+
+    public function filter(GenreFilter $filter)
+    {
+
+        $films = Film::filter($filter);
+        $genres = $this->service->createGenre();
+
+        return view('site.main', ['films' => $films, 'genres' => $genres]);
+
+    }
+
+    public function sort(Request $request)
+    {
+//        $films = Film::query();
+//
+//        if ($request->filled('year')) {
+//            $films = Film::query();
+//            $year = $request->get('year');
+//            $films = $films->where('year', 'LIKE', "%{$year}%")
+//                ->paginate(18);
+//        }
+//
+//        if ($request->filled('genre')) {
+//            $films = Film::query();
+//            $genreId = $request->get('genre');
+//            $films = $films->whereHas('genres', function ($query) use ($genreId) {
+//                $query->where('genres.id', $genreId);
+//            })->paginate(18);
+//        }
+
+//        if ($request->filled('sort-data')) {
+//            $films = Film::orderByDesc('created_at')->paginate(18);
+//            $new = $request->get('sort-data');
+//            if ($new === '2') {
+//                $films = Film::orderBy('created_at')->paginate(18);
+//                $genres = $this->service->createGenre();
+//                return view('site.main', ['films' => $films, 'genres' => $genres]);
+//            }
+//        }
+        $films = $this->service->sort($request);
+//        $years = $films->map(function ($film){
+//            return substr($film->year, 0, 4);
+//        });
+        $years = $this->service->years()->map(function ($year){
+            return substr($year->year, 0, 4);
+        })->unique();
+        $genres = $this->service->createGenre();
+        return view('site.main', ['films' => $films, 'genres' => $genres, 'years' => $years]);
 
     }
 }

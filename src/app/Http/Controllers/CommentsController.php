@@ -26,16 +26,6 @@ class CommentsController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return void
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param CommentRequest $request
@@ -50,28 +40,6 @@ class CommentsController extends Controller
         $data['film_id'] = $film->id;
         Comment::create($data);
         return redirect()->route('films.content.show', $film->id);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return void
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return void
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**

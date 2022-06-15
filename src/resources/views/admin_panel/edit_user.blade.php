@@ -3,7 +3,7 @@
 @section('title', "Редактировать юзера $user->name")
 
 @section('working_place')
-    <div class="block p-6 rounded-lg shadow-lg bg-white max-w-full">
+    <div class="block p-6 rounded-lg shadow-lg bg-white max-w-full h-screen">
         <form action="{{route('admin.users.update', ['user' => $user->id])}}" method="POST">
             @csrf
             @method('PUT')

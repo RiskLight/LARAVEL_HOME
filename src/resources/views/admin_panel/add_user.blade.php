@@ -3,7 +3,7 @@
 @section('title', 'Добавление пользователя')
 
 @section('working_place')
-    <div class="block p-6 rounded-lg shadow-lg bg-white max-w-full">
+    <div class="block p-6 rounded-lg shadow-lg bg-white max-w-full h-screen">
         <form action="{{route('admin.users.store')}}" method="POST">
             @csrf
             <div class="form-group mb-6">

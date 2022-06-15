@@ -108,6 +108,8 @@ Route::group([
     });
 
     Route::get('/search', [FilmsController::class, 'search'])->name('search');
+//    Route::get('/filter', [FilmsController::class, 'filter'])->name('filter');
+    Route::get('/sort', [FilmsController::class, 'sort'])->name('sort');
 
 });
 
@@ -118,12 +120,16 @@ Route::group([
     Route::get('/', [GenresController::class, 'index'])->name('genres');
 });
 
+
+
 Auth::routes();
 
 
 Route::get('auth/activate', [ActivateController::class, 'activate'])->name('auth.activate');
 Route::get('auth/activate/resend', [ActivationResendController::class, 'showResendForm'])->name('auth.activate.resend');
 Route::post('auth/activate/resend', [ActivationResendController::class, 'resend']);
+
+
 
 //Route::get('/search', [FilmsController::class, 'search'])->name('search');
 //Route::group([

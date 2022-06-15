@@ -1,7 +1,7 @@
 @extends('admin_panel.layouts.admin_layer')
 @section('title')Пользователи@endsection
 @section('working_place')
-    <div class="max-w-full">
+    <div class="max-w-full h-full">
         <div class="grid lg:grid-cols-6 m-12">
             @foreach($users as $user)
             <div class="border-2 p-6">
