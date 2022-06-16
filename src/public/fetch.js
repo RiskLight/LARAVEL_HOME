@@ -65,7 +65,7 @@ inputAll.forEach(input => {
                 let span = document.querySelector('#exact-rating');
                 span.textContent = rateNew;
             });
-    }, 1000));
+    }, 2000));
 })
 
 function disabledInput () {

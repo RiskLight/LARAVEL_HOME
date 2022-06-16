@@ -3,6 +3,7 @@
 namespace App\Contracts;
 
 use App\Http\Requests\UserRequest;
+use App\Http\Requests\UserUpdateRequest;
 
 interface UserServiceContract
 {
@@ -10,7 +11,7 @@ interface UserServiceContract
 
     public function store(UserRequest $request): void;
 
-    public function update(UserRequest $request, $id): void;
+    public function update(UserUpdateRequest $request, $id): void;
 
     public function destroy($id): void;
 

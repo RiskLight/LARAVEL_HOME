@@ -3,7 +3,11 @@
 @section('working_place')
     <div class="max-w-full h-full">
         <div class="grid lg:grid-cols-6 m-12">
+
             @foreach($comments as $comment)
+                @if(isset($comment))
+                    @include('admin_panel.modal_admin')
+                @endif
                 <div class="border-2 p-6">
                     <a href="3" class="rounded-t-lg">ID = {{$comment->id}}</a>
                 </div>
@@ -36,6 +40,7 @@
                         </button>
                     </form>
                 </div>
+
             @endforeach
         </div>
         <div class="flex justify-evenly">
@@ -43,9 +48,6 @@
         </div>
     </div>
 @endsection
-@if(isset($comment))
-@include('admin_panel.modal_admin')
-@endif
 @section('script_admin')
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
 <script src="{{asset('modal.js')}}"></script>

@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Contracts\UserServiceContract;
 use App\Http\Requests\UserRequest;
+use App\Http\Requests\UserUpdateRequest;
 use App\Repositories\RoleRepository;
 use App\Repositories\UserRepository;
 
@@ -38,7 +39,7 @@ class UserService implements UserServiceContract
         // TODO: Implement store() method.
         $this->repository->store($request);
     }
-    public function update(UserRequest $request, $id): void
+    public function update(UserUpdateRequest $request, $id): void
     {
         // TODO: Implement update() method.
         $this->repository->update($request, $id);

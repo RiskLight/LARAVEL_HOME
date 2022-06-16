@@ -40,6 +40,8 @@ class FilmRepository
 
         $film = $this->query()->create($data);
         $film->genres()->sync($request->genre);
+
+        return $film;
     }
 
     public function show($id)

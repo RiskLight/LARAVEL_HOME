@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Http\Requests\UserRequest;
+use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
@@ -32,7 +33,7 @@ class UserRepository
         return $this->query()->find($id);
     }
 
-    public function update(UserRequest $request, $id)
+    public function update(UserUpdateRequest $request, $id)
     {
         $data = $request->except('_token', 'method');
         $user = $this->query()->find($id);

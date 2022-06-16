@@ -11,9 +11,7 @@
     </div>
     <div class="text-2xl text-blue-500-600 text-center">
         Жанры:
-        @foreach($film->genres as $genre)
-            {{$genre->name}}
-        @endforeach
+        <span class="lowercase">@foreach($film->genres as $genre) {{$genre->name}}@endforeach.</span>
     </div>
     <div class="flex justify-around mt-12 mb-12">
         <iframe src="{{$film->film_path}}" class="w-3/4" height="600"

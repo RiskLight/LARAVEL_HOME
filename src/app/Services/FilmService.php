@@ -5,10 +5,13 @@ namespace App\Services;
 use App\Contracts\FilmServiceContract;
 use App\Http\Requests\FilmRequest;
 use App\Http\Requests\FilmUpdateRequest;
+use App\Jobs\SendFilmInfoJob;
+use App\Models\Film;
 use App\Repositories\FilmRepository;
 use App\Repositories\GenreRepository;
 use App\Repositories\StandartRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class FilmService implements FilmServiceContract
 {
@@ -37,7 +40,13 @@ class FilmService implements FilmServiceContract
     public function store(FilmRequest $request): void
     {
         // TODO: Implement store() method.
-        $this->repository->store($request);
+        $film = $this->repository->store($request);
+
+        $userInfo = [
+            'email' => auth()->user()->id,
+            'name' => auth()->user()->name
+        ];
+        SendFilmInfoJob::dispatch($film, $userInfo);
     }
 
     public function adminIndex(): object

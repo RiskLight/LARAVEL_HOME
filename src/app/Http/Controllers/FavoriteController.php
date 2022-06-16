@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\FavoriteServiceContract;
 use App\Models\Film;
 use App\Models\FilmUser;
 use App\Models\User;
@@ -16,6 +17,14 @@ use Illuminate\Support\Facades\DB;
 
 class FavoriteController extends Controller
 {
+
+    private $service;
+
+    public function __construct(FavoriteServiceContract $service)
+    {
+        $this->service = $service;
+
+    }
     /**
      * Display a listing of the resource.
      *
@@ -23,9 +32,7 @@ class FavoriteController extends Controller
      */
     public function index()
     {
-        $films = Film::whereHas('users', function (Builder $query) {
-            $query->where('user_id', auth()->user()->id);
-        })->paginate(18);
+        $films = $this->service->index();
 
        return view('site.favorite', ['films' => $films]);
     }
@@ -38,9 +45,8 @@ class FavoriteController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->except('_token');
-        $data['user_id'] = auth()->user()->id;
-        FilmUser::create($data);
+        $this->service->store($request);
+
         return redirect()->route('films.favorite.index');
     }
 
@@ -52,7 +58,8 @@ class FavoriteController extends Controller
      */
     public function destroy($id)
     {
-        FilmUser::where('film_id', $id)->where('user_id', auth()->user()->id)->delete();
+        $this->service->destroy($id);
+
         return redirect()->route('films.favorite.index');
     }
 }

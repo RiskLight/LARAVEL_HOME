@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\RateServiceContract;
 use App\Models\Rate;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
@@ -12,18 +13,21 @@ use Illuminate\Http\Response;
 class RateController extends Controller
 {
 
+    private $service;
+
+    public function __construct(RateServiceContract $service)
+    {
+        $this->service = $service;
+    }
     /**
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return RedirectResponse
+     * @return void
      */
     public function store(Request $request)
     {
-        Rate::updateOrCreate(
-            ['user_id' => auth()->user()->id, 'film_id' => $request->get('film_id')],
-            ['points' => $request->get('points')]
-        );
+        $this->service->store($request);
     }
 
     /**
@@ -34,9 +38,7 @@ class RateController extends Controller
      */
     public function show($id)
     {
-
-        $rate = Rate::where('film_id', $id)->avg('points');
-        $exactRating = round($rate, 2);
+        $exactRating = $this->service->show($id);
 
         return response()->json($exactRating);
     }

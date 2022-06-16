@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Events\Auth\UserActivationEmail;
+use App\Models\Film;
+use App\Observers\FilmObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -29,6 +31,6 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+//        Film::observe(new FilmObserver());
     }
 }
