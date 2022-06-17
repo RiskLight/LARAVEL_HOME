@@ -127,4 +127,4 @@ Route::get('auth/activate/resend', [ActivationResendController::class, 'showRese
 Route::post('auth/activate/resend', [ActivationResendController::class, 'resend']);
 
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

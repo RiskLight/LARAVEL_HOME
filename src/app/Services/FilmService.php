@@ -43,7 +43,7 @@ class FilmService implements FilmServiceContract
         $film = $this->repository->store($request);
 
         $userInfo = [
-            'email' => auth()->user()->id,
+            'email' => auth()->user()->email,
             'name' => auth()->user()->name
         ];
         SendFilmInfoJob::dispatch($film, $userInfo);

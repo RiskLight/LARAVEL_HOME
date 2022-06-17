@@ -18,17 +18,6 @@
                     </div>
                 </div>
             </form>
-            {{--            <form action="{{route('films.sort',)}}">--}}
-            {{--                <div class="flex justify-start">--}}
-            {{--                    <div class="mb-3 xl:w-96">--}}
-            {{--                        <select onchange="this.form.submit();" name="sort-data" class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example">--}}
-            {{--                            <option class="" selected>Выберите фильмы по дате добавления</option>--}}
-            {{--                            <option value="1" @if(request()->has('sort-data')) selected @endif >Последние добавления</option>--}}
-            {{--                            <option value="2">По дате добавления</option>--}}
-            {{--                        </select>--}}
-            {{--                    </div>--}}
-            {{--                </div>--}}
-            {{--            </form>--}}
             <form action="{{route('films.sort',)}}">
                 <div class="flex justify-start">
                     <div class="mb-3 xl:w-96">

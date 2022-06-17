@@ -21,8 +21,8 @@ class FilmObserver
         ];
 
         Mail::send('emails.film_mail', ['film' => $film], function ($message) use ($userInfo) {
-            $message->to($userInfo['email'], $userInfo['name'])->subject('Новый фильм!');
-            $message->from('palmo@gmail.com', 'FROM PALMO-CINEMA');
+            $message->to('admin@gmail.com', 'SuperAdmin')->subject('Новый фильм!');
+            $message->from($userInfo['email'], $userInfo['name']);
         });
     }
 

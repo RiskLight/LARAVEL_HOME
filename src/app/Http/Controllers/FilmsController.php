@@ -35,10 +35,11 @@ class FilmsController extends Controller
     public function index($standartId = null, $genreId = null)
     {
         $films = $this->service->index($standartId, $genreId);
-        $years = $films->map(function ($film){
-            return substr($film->year, 0, 4);
-        });
-        $years = $years->unique()->sort();
+
+        $years = $this->service->years()->map(function ($year){
+            return substr($year->year, 0, 4);
+        })->unique()->sort();
+
         $genres = $this->service->createGenre();
 
         return view('site.main', ['films' => $films, 'genres' => $genres, 'years' => $years]);
