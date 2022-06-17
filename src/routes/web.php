@@ -9,6 +9,7 @@ use App\Http\Controllers\FilmsController;
 use App\Http\Controllers\GenresController;
 use App\Http\Controllers\RateController;
 use App\Http\Controllers\UsersController;
+use App\Http\Middleware\Admin;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -23,8 +24,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [FilmsController::class, 'index']);
-Route::get('/admin', [FilmsController::class, 'adminIndex'])->middleware(\App\Http\Middleware\Admin::class);
+Route::get('/', [FilmsController::class, 'index'])->name('home');
+Route::get('/admin', [FilmsController::class, 'adminIndex'])->middleware(Admin::class);
 Route::group([
     'as' => 'admin.',
     'prefix' => 'admin/',
@@ -108,7 +109,6 @@ Route::group([
     });
 
     Route::get('/search', [FilmsController::class, 'search'])->name('search');
-//    Route::get('/filter', [FilmsController::class, 'filter'])->name('filter');
     Route::get('/sort', [FilmsController::class, 'sort'])->name('sort');
 
 });
@@ -120,29 +120,11 @@ Route::group([
     Route::get('/', [GenresController::class, 'index'])->name('genres');
 });
 
-
-
 Auth::routes();
-
 
 Route::get('auth/activate', [ActivateController::class, 'activate'])->name('auth.activate');
 Route::get('auth/activate/resend', [ActivationResendController::class, 'showResendForm'])->name('auth.activate.resend');
 Route::post('auth/activate/resend', [ActivationResendController::class, 'resend']);
 
-
-
-//Route::get('/search', [FilmsController::class, 'search'])->name('search');
-//Route::group([
-//    'as' => 'auth.',
-//    'prefix' => 'auth'
-//], function () {
-//    Route::get('/activate', [ActivateController::class, 'activate'])->name('activate.resend');
-//    Route::get('/activate/resend', [ActivationResendController::class, 'showResendForm'])->name('resend');
-//    Route::post('/activate/resend', [ActivationResendController::class, 'resend'])->name('post');
-//
-//});
-
-//Route::get('auth/activate', [ActivateController::class, 'activate'])->name('auth.activate');
-//Route::get('auth/activate/resend', [ActivationResendController::class, 'showResendForm'])->name('auth.activate.resend');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

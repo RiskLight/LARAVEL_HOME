@@ -143,10 +143,13 @@ class FilmsController extends Controller
      */
     public function search(Request $request)
     {
+        $years = $this->service->years()->map(function ($year){
+            return substr($year->year, 0, 4);
+        })->unique();
         $films = $this->service->search($request);
         $genres = $this->service->createGenre();
 
-        return view('site.main', ['films' => $films,'genres' => $genres ]);
+        return view('site.main', ['films' => $films,'genres' => $genres, 'years' => $years ]);
     }
 
     /**
@@ -160,48 +163,11 @@ class FilmsController extends Controller
         return view('admin_panel.films', ['films' => $films]);
     }
 
-    public function filter(GenreFilter $filter)
-    {
-
-        $films = Film::filter($filter);
-        $genres = $this->service->createGenre();
-
-        return view('site.main', ['films' => $films, 'genres' => $genres]);
-
-    }
 
     public function sort(Request $request)
     {
-//        $films = Film::query();
-//
-//        if ($request->filled('year')) {
-//            $films = Film::query();
-//            $year = $request->get('year');
-//            $films = $films->where('year', 'LIKE', "%{$year}%")
-//                ->paginate(18);
-//        }
-//
-//        if ($request->filled('genre')) {
-//            $films = Film::query();
-//            $genreId = $request->get('genre');
-//            $films = $films->whereHas('genres', function ($query) use ($genreId) {
-//                $query->where('genres.id', $genreId);
-//            })->paginate(18);
-//        }
-
-//        if ($request->filled('sort-data')) {
-//            $films = Film::orderByDesc('created_at')->paginate(18);
-//            $new = $request->get('sort-data');
-//            if ($new === '2') {
-//                $films = Film::orderBy('created_at')->paginate(18);
-//                $genres = $this->service->createGenre();
-//                return view('site.main', ['films' => $films, 'genres' => $genres]);
-//            }
-//        }
         $films = $this->service->sort($request);
-//        $years = $films->map(function ($film){
-//            return substr($film->year, 0, 4);
-//        });
+
         $years = $this->service->years()->map(function ($year){
             return substr($year->year, 0, 4);
         })->unique();
