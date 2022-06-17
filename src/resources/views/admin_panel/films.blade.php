@@ -13,6 +13,14 @@
     </div>
 @endsection
 @section('working_place')
+    @if($films->isEmpty())
+    <div class="flex w-3/4 mx-auto justify-center h-screen">
+        <div class="flex flex-col">
+            <p class="text-6xl text-red-700 text-center">Ничего не найдено</p>
+            <p class="text-6xl text-red-700">Попробуйте еще раз</p>
+        </div>
+    </div>
+    @else
     <div class="max-w-full">
         <div class="grid lg:grid-cols-6 m-12">
             @foreach($films as $film)
@@ -50,4 +58,5 @@
             {{ $films->appends(['search' => request()->search])->links() }}
         </div>
     </div>
+    @endif
 @endsection

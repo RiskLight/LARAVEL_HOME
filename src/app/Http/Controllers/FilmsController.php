@@ -168,7 +168,6 @@ class FilmsController extends Controller
     public function sort(Request $request)
     {
         $films = $this->service->sort($request);
-
         $years = $this->service->years()->map(function ($year){
             return substr($year->year, 0, 4);
         })->unique();

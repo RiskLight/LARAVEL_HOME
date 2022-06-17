@@ -117,7 +117,7 @@
         </div>
     @endguest
     @if(isset($film->comments))
-        @foreach($film->comments as $comment)
+        @foreach($film->comments->sortByDesc('description') as $comment)
             <div class="w-3/4 mx-auto">
                 <div class="flex-col mt-6 mx-auto items-center justify-start shadow-lg mt-56 mx-8 mb-1 w-full">
                     <div class="p-6 flex flex-col justify-start">

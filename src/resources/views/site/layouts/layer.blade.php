@@ -104,16 +104,6 @@
             </div>
         </div>
     </nav>
-    {{--    <div class="flex w-3/4 mx-auto mt-1 justify-center">--}}
-    {{--        <div class="w-full">--}}
-    {{--            <form action="{{route('films.search')}}" method="GET">--}}
-    {{--            <input type="search"--}}
-    {{--                   class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300--}}
-    {{--                        rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none "--}}
-    {{--                   id="exampleSearch" name="search" placeholder="Введите название"/>--}}
-    {{--            </form>--}}
-    {{--        </div>--}}
-    {{--    </div>--}}
 </header>
 @yield('main_content')
 <footer class="text-center bg-gray-900 text-white ">
